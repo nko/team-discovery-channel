@@ -71,7 +71,7 @@ app.post('/tests/', function(req, res) {
 app.get('/tests/:id', function(req, res) {
     db.getDoc(req.params.id, function(er, doc) {
         sys.log(doc);
-        res.render('view/tests/show.html.ejs', {
+        res.render('view/tests/show.ejs', {
             locals: { id: req.params.id, test: doc }
         });
     });
