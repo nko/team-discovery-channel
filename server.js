@@ -9,7 +9,6 @@ require.paths.unshift('lib/discovery');
 
 var sys = require('sys');
 var helpers = require('helpers');
-var connect = require("connect")
 
 // Load in paths that should be search when running
 // require. Makes our lives easier when dealing with 3rd
@@ -20,6 +19,7 @@ for ( var i = 0, path; ( path = paths[i] ) != null; i++ ) {
     require.paths.unshift(path);
 }
 
+var connect = require("connect")
 var express = require('express');
 var sandbox = require('sandbox');
 
@@ -75,4 +75,3 @@ app.get('/test', function(requ, res) {
 
 var port = process.env.PORT || 8000;
 app.listen(parseInt(port), null);
-console.log('node server listening on ' + port);
