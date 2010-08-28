@@ -19,12 +19,16 @@ for ( var i = 0, path; ( path = paths[i] ) != null; i++ ) {
     require.paths.unshift(path);
 }
 
-
 var express = require('express');
-var sandbox = require('sandbox')
+var sandbox = require('sandbox');
 
 // Launch Express.
 var app = express.createServer();
+
+app.configure(function(){
+    app.use(express.staticProvider(__dirname + '/public'));
+});
+
 app.listen(parseInt(process.env.PORT || 8000), null);
 
 // Index.
