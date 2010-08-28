@@ -19,6 +19,6 @@ for ( var i = 0, path; ( path = paths[i] ) != null; i++ ) {
     require.paths.unshift(path);
 }
 
+// Run unit tests on a remote server.
 var sandbox = require('sandbox');
-
-sys.puts('hello world! AMASDFADf');
+sandbox.executeTest('foo');

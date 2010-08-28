@@ -62,7 +62,9 @@ app.post('/tests/', function(req, res) {
 
 // Unit-Testing endpoint.
 app.get('/test', function(requ, res) {
-    var foo = new sandbox.Sandbox();
+    var foo = new sandbox.Sandbox({
+        timeout: 20000
+    });
     foo.run(sandbox, function(output) {
         res.send(output);
     });
