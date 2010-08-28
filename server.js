@@ -21,7 +21,6 @@ for ( var i = 0, path; ( path = paths[i] ) != null; i++ ) {
 
 var express = require('express');
 var sandbox = require('sandbox');
-var Twitter = require('evented-twitter').Twitter;
 
 // NPM Bundle
 require('./vendor');
@@ -157,19 +156,45 @@ app.get('/tests/:test_id/results/:id', function(req, res) {
 
 // ??? Deprecated ???
 app.get('/run-tests', function(req, res) {
-    res.render('view/run-tests.ejs', {
-        locals: {
-            'error': '',
-            'testOutput': '',
-            'url': ''
-        }
-    });
+    var gitPayload = helpers.loadJSONConfiguration('githook');
+    var url = gitPayload.repository.url;
+
+    if (url) {
+        var scriptRunner = new sandbox.Sandbox({
+            timeout: 10000,
+            url: url
+        });
+                
+        // http://github.com/nko/team-discovery-channel.
+        scriptRunner.run(sandbox, function(output) {
+            var error = '';
+
+           var testOutput = [];
+            try {
+                var testOutput = JSON.parse(output);
+            } catch (e) {
+                error = 'Failed running tests.';
+            }
+            
+            sandbox.handleBuildTweets(gitPayload, testOutput);
+
+            res.render('view/index.ejs', {
+                locals: {
+                    error: null,
+                    foo: 'Hello World'
+                }
+            });
+        });
+    }
 });
 
 app.post('/run-tests-twitter', function(req, res) {
     sys.puts(req.body.payload);
 
-   /* var t = new Twitter(process.env.TWITTER_USER, process.env.TWITTER_PASSWORD);
+ /*   try {
+    var gitPayload = JSON.req.body.payload;
+    
+    var t = new Twitter(process.env.TWITTER_USER, process.env.TWITTER_PASSWORD);
 
     t.update('json', {status: "Hello I CloudQ, why don't you let me run those tests for you #nodeko"}, function(result) {
          // The response is not parsed for you
@@ -181,7 +206,11 @@ app.post('/run-tests-twitter', function(req, res) {
          } catch(e) {
                 sys.puts(e);
          }
-    });*/
+    });
+    
+    } catch (Exception e) {
+        
+    }*/
 });
 
 var port = process.env.PORT || 8000;
