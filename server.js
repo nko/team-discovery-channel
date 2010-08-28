@@ -62,14 +62,14 @@ app.post('/tests/', function(req, res) {
 
 // Unit-Testing endpoint.
 app.get('/test', function(requ, res) {
-    sandbox.executeTest( 'www.google.com' );
-
-    res.render('view/index.ejs', {
-        locals: {
-            error: null,
-            foo: 'Hello World'
-        }
+    var foo = new sandbox.Sandbox();
+    foo.run(sandbox, function(output) {
+        res.send(output);
     });
+    
+/*    sandbox.executeTest( 'www.google.com' );*/
+
+
 });
 
 var port = process.env.PORT || 8000;
