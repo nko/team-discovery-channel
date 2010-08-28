@@ -20,11 +20,11 @@ for ( var i = 0, path; ( path = paths[i] ) != null; i++ ) {
 }
 
 
-// Setup the express routes. Start with '/' for testing.
 var express = require('express');
-var app = express.createServer();
+var sandbox = require('sandbox')
 
 // Launch Express.
+var app = express.createServer();
 app.listen(parseInt(process.env.PORT || 8000), null);
 
 // Index.
@@ -36,8 +36,9 @@ app.get('/', function(req, res) {
     });
 })
 
+// Unit-Testing endpoint.
 app.get('/test', function(requ, res) {
-    
+    sandbox.executeTest( 'www.google.com' );
     
     res.render('view/index.ejs', {
         locals: {

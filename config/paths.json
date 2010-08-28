@@ -2,5 +2,7 @@
     "support/express/lib",
     "support/express/support/connect/lib",
     "support/express/support/ejs/lib",
-    "support/jefe/lib"
+    "support/jefe/lib",
+    "support/jsdom/lib",
+    "support/node-htmlparser/lib"
 ]
