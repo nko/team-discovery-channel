@@ -31,13 +31,18 @@ var db = couchdb
     .createClient(5984, 'shodan.couchone.com', 'user', 'pass')
     .db('cloudq');
 
+// Create the design document. If it already exists, it won't
+// get written. You'll need to go to the database admin area
+// and edit it yourself for now (sigh).
 db.saveDesign('cloudq', {
     views: {
+        // View function returns *strictly* tests
         "tests": {
             map: function(doc) {
                 emit(doc.id, doc);
             }
         },
+        // View function returns *strictly* test_results
         "test_results": {
             map: function(doc) {
                 if (doc.type == 'test_results') {
@@ -46,12 +51,13 @@ db.saveDesign('cloudq', {
             }
         }
     }}, function(er, doc) {
-        if (er) {
+        if (er.error != 'conflict') {
+            // Conflicts are OK, for now (see above)
             throw new Error(JSON.stringify(er));
         }
-        sys.log(doc);
     }
 );
+
 // Launch Express.
 var app = express.createServer();
 
@@ -63,7 +69,7 @@ app.configure(function() {
     app.use(express.staticProvider(__dirname + '/public'));
 });
 
-// Index.
+// App index
 app.get('/', function(req, res) {
     res.render('view/index.ejs', {
         locals: {
@@ -73,6 +79,7 @@ app.get('/', function(req, res) {
     });
 });
 
+// POST a new test record
 app.post('/tests/', function(req, res) {
     if (req.body.url) {
         db.saveDoc({url: req.body.url, type: 'test'}, function(er, doc) {
@@ -91,6 +98,7 @@ app.post('/tests/', function(req, res) {
     }
 });
 
+// GET a test record
 app.get('/tests/:id', function(req, res) {
     db.getDoc(req.params.id, function(er, doc) {
         res.render('view/tests/show.ejs', {
@@ -99,7 +107,7 @@ app.get('/tests/:id', function(req, res) {
     });
 });
 
-// Unit-Testing endpoint.
+// Execute test runner, then redirect to results (stored in DB)
 app.post('/tests/:id/run', function(req, res) {
     db.getDoc(req.params.id, function(er, doc) {
         if (doc.url) {
@@ -119,18 +127,26 @@ app.post('/tests/:id/run', function(req, res) {
                     error = 'Failed running tests.'
                 }
 
-                res.render('view/run-tests.ejs', {
-                    locals: {
-                        'error': error,
-                        'testOutput': testOutput,
-                        'url': doc.url
-                    }
+                db.saveDoc({test_id: req.params.id, type: 'test_result', output: testOutput }, function(er, doc) {
+                    res.redirect('/tests/' + req.params.id + '/results/' + doc.id);
                 });
             });
         }
     });
 });
 
+// GET a test result record
+app.get('/tests/:test_id/results/:id', function(req, res) {
+    db.getDoc(req.params.id, function(er, doc) {
+        res.render('view/test_results/show.ejs', {
+            locals: {
+                test_result: doc
+            }
+        });
+    });
+});
+
+// ??? Deprecated ???
 app.get('/run-tests', function(req, res) {
     res.render('view/run-tests.ejs', {
         locals: {
