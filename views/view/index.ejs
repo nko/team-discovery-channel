@@ -1,10 +1,19 @@
-<h1>Welcome to the social</h1>
+<h1>Who Unit?</h1>
 
 <% if (error) { %>
-  <div id="error"><%= error %></div>
+  <div class="error" id="error"><%= error %></div>
 <% } %>
 
-<form action="/tests/" method="POST">
-  <label for="test-url">URL:</label> <input id="test-url" type="input" name="url" value=""/><br/>
-  <input type="submit"/>
+<form action="/tests/" method="POST">.
+  <fieldset>
+    <legend>Add a new test</legend>
+    <p>
+      <label for="test-url">QUnit Index URL</label><br/>
+      <input id="test-url" type="input" name="url" value=""/>
+    </p>
+
+    <p>
+      <input type="submit" value="Submit">
+    </p>
+  </fieldset>
 </form>
