@@ -60,8 +60,6 @@ var REST_API = {
 function buildAPI(ctx, schema, path, name) {
     path = path || '';
     name = name || '';
-    sys.puts(path);
-    sys.puts(name);
 
     if(typeof schema == 'object') {
 
@@ -93,15 +91,12 @@ function buildAPI(ctx, schema, path, name) {
 }
 
 function addAPIMethod(ctx, path, name, default_o, default_p) {
-    sys.puts('  api method: ' + name);
 
     var urlPath = path;
 
     var default_options = _.extend({}, DEFAULT_OPTIONS, default_o);
-    sys.puts('  o:' + sys.inspect(default_options));
 
     var default_params = _.extend({}, DEFAULT_PARAMS, default_p);
-    sys.puts('  p:' + sys.inspect(default_params));
     ctx.prototype[name] = function(format, params, cb) {
         format = format || DEFAULT_FORMAT;
         if(params) {
