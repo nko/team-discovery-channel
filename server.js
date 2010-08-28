@@ -19,7 +19,6 @@ for ( var i = 0, path; ( path = paths[i] ) != null; i++ ) {
     require.paths.unshift(path);
 }
 
-var connect = require("connect")
 var express = require('express');
 var sandbox = require('sandbox');
 

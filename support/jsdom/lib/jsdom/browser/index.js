@@ -1,6 +1,7 @@
 var sys  = require('sys'),
     http = require('http'),
-    url  = require('url');
+    url  = require('url'),
+    parser = require('htmlparser');
 
 var HtmlToDom = require('./htmltodom').HtmlToDom;
 var domToHtml = require('./domtohtml').domToHtml;
