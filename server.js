@@ -159,7 +159,7 @@ app.get('/run-tests', function(req, res) {
 });
 
 app.post('/run-tests-twitter', function(req, res) {
-    sys.puts(req.payload);
+    sys.puts(req.body.payload);
     
    /* var t = new Twitter(process.env.TWITTER_USER, process.env.TWITTER_PASSWORD);
 
