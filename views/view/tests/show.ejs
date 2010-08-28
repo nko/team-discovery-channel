@@ -1,9 +1,19 @@
-<p>
-  Congratulations. We've received your test.
-</p>
+<div class="outer-box">
+  <div class="outer-box-inset">
+    <div class="inner-box">
+      <div class="inner-box-inset">
+        <p>
+          Congratulations. We've received your test.
 
-<div class="success"><%= test.url %></div>
+          <div class="success"><%= test.url %></div>
 
-<form action="/tests/<%= id %>/run" method="POST">
-  <input type="submit" value="Run Test"/>
-</form>
+        </p>
+        <form action="/tests/<%= id %>/run" method="POST">
+          <a class="button" href="#" onclick="document.forms[0].submit()"></a>
+          <input type="submit" style="display: none" value="Run Test"/><!-- allows enter to submit form -->
+        </form>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+  </div>
+</div>

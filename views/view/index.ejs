@@ -1,17 +1,27 @@
-<% if (error) { %>
-  <div class="error" id="error"><%= error %></div>
-<% } %>
-
-<form action="/tests/" method="POST">.
-  <fieldset>
-    <legend>Add a new test</legend>
-    <p>
-      <label for="test-url">QUnit Index URL</label><br/>
+<div class="outer-box">
+  <div class="outer-box-inset">
+    <% if (error) { %>
+      <div class="error" id="error"><%= error %></div>
+    <% } %>
+  
+    <form action="/tests/" method="POST">
+      <label for="test-url">GitHub URL</label>
       <input id="test-url" type="input" name="url" value="http://github.com/nko/team-discovery-channel"/>
-    </p>
+      <a class="button" href="#" onclick="document.forms[0].submit()"></a>
+      <input type="submit" style="display: none" /><!-- allows enter to submit form -->
+  </div>
+</div>
 
-    <p>
-      <input type="submit" value="Submit">
-    </p>
-  </fieldset>
-</form>
+<div class="outer-box">
+  <div class="outer-box-inset">
+    
+    <div class="inner-box">
+      <div class="inner-box-inset">
+        <p>
+          CloudQ takes your project's QUnit tests and runs them in a sandboxed DOM environment on our servers. Then we notify you with the result. It's a breeze!
+        </p>
+      </div>
+    </div>
+    
+  </div>
+</div>

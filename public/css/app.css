@@ -1,6 +1,159 @@
-body {
-    background-attachment: fixed;
-    background-image: url(/img/team-discovery-channel.jpg);
-    background-repeat: no-repeat;
-    background-position: bottom right;
+/* RESET STYLES FROM BLUEPRINT */
+
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, code, del, dfn, em, img, q, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {margin:0;padding:0;border:0;font-weight:inherit;font-style:inherit;font-size:100%;font-family:inherit;vertical-align:baseline;}
+body {line-height:1.5;}
+table {border-collapse:separate;border-spacing:0;}
+caption, th, td {text-align:left;font-weight:normal;}
+table, td, th {vertical-align:middle;}
+blockquote:before, blockquote:after, q:before, q:after {content:"";}
+blockquote, q {quotes:"" "";}
+a img {border:none;}
+
+
+/* OPTIMIZATION FOR BROWSER QUIRKS */
+
+html { overflow-y: scroll; } /* Forces a vertical scrollbar in Mozilla */
+img { -ms-interpolation-mode: bicubic; } /* Makes IE scale /img smoothly */
+a:active, a:focus { outline: none; } /* Disables the dotted outline FireFox puts on active links */
+
+
+/* CONTAINER */
+.container {
+	width: 450px;
+	margin: 0 auto;	
+	padding-top: 40px;
 }
+
+html {
+  height: 100%;
+}
+body {
+ 	font-family: Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	line-height: 22px;
+	color: #ffffff;
+	height: 100%;
+	background: #aadbf7 url('/img/background.png') repeat-x;
+}
+
+
+
+/* OUTER BOX */
+.outer-box {
+  background: #8ac6e9;
+  margin: 36px 0;
+  overflow: hidden;
+  border: solid 1px #548fb2;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 1px 1px 0px rgba(255, 255, 255, 0.45);
+  -moz-box-shadow: 1px 1px 0px rgba(255, 255, 255, 0.45);
+  box-shadow: 1px 1px 0px rgba(255, 255, 255, 0.45);
+}
+  .outer-box-inset {
+    padding: 18px;
+    -webkit-box-shadow: inset 1px 1px 3px #5b9dc3;
+    -moz-box-shadow: inset 1px 1px 3px #5b9dc3;
+    box-shadow: inset 1px 1px 3px #5b9dc3;
+    position: relative;
+  }
+  
+/* INNER BOX */
+.inner-box {
+  background: #ffffff;
+  overflow: hidden;
+  border: solid 1px #4384aa;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 1px 1px 0px rgba(255, 255, 255, 0.45);
+  -moz-box-shadow: 1px 1px 0px rgba(255, 255, 255, 0.45);
+  box-shadow: 1px 1px 0px rgba(255, 255, 255, 0.45);
+  
+  color: #474747;
+}
+  .inner-box-inset {
+    padding: 10px;
+    -webkit-box-shadow: inset 1px 1px 3px #b7d6e8;
+    -moz-box-shadow: inset 1px 1px 3px #b7d6e8;
+    box-shadow: inset 1px 1px 3px #b7d6e8;
+  }
+  
+  
+/* FORMS */  
+label {
+  display: block;
+  font-size: 16px;
+  font-weight: bold;
+  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.2);
+  margin-bottom: 4px;
+}  
+  
+input {
+  width: 324px;
+  margin-right: 20px;
+  outline: none;
+  border: none;
+  background: url("/img/input.png") no-repeat;
+  height: 25px;
+  font-size: 16px;
+  font-family: Helvetica, Arial, Tahoma, sans-serif;
+  padding: 10px 80px 10px 10px;
+}
+
+.button {
+  display: block;
+  height: 32px;
+  width: 65px;
+  background: url("/img/button.png") no-repeat;
+  position: absolute;
+  top: 50px;
+  right: 22px;
+}  
+  .button:hover {
+    background: url("/img/button.png") 0px -32px no-repeat;
+  }
+  .button:active {
+    background: url("/img/button.png") 0px -64px no-repeat;
+  }
+  
+  
+  
+/* TESTS */
+.tests {
+  list-style: none;
+  font-size: 12px;
+  line-height: 18px;
+  margin: -5px;
+}  
+  .tests li {
+    margin: 5px 0px;
+  }
+  .tests .header {
+    font-weight: bold;
+    margin-top: 9px;
+    padding: 5px;
+  }
+  .tests .passed {
+    background: #f3ffd2;
+    color: #6e803c;
+    padding: 5px;
+  }
+  .tests .failed {
+    background: #ffe9e9;
+    color: #803d3d;
+    padding: 5px;
+  }
+  
+  
+  ws, strike, del {
+    text-decoration: line-through;
+  }
+  ins {
+    background-color: #ffff6e;
+    text-decoration: none;
+  }
+  
+  
+  

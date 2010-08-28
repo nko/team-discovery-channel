@@ -1,19 +1,26 @@
-<h2>Test Results for ... ???</h2>
-<% for (var i = 0, test; (test = test_results.output[i]) != null; i++) { %>
+<div class="outer-box">
+  <div class="outer-box-inset">
+    
+    <div class="inner-box">
+      <div class="inner-box-inset">
+        <ul class="tests">
+        <% for (var i = 0, test; (test = test_results.output[i]) != null; i++) { %>
 
-    <h3><%= test.name %></h3>
+            <li class="header"><%= test.name %></li>
 
-    <% for (var j = 0, assertion; (assertion = test.tests[j]) != null; j++) { %>
+            <% for (var j = 0, assertion; (assertion = test.tests[j]) != null; j++) { %>
 
-        <% if (assertion.result) { %>
-            <div class="success">
-                <%= assertion.message %>
-            </div>
-        <% } else { %>
-            <div class="error">
-                <%= assertion.message %>
-            </div>
+                <% if (assertion.result) { %>
+                    <li class="passed"><%= assertion.message %></li>
+                <% } else { %>
+                    <li class="failed"><%= assertion.message %></li>
+                <% } %>
+
+            <% } %>
         <% } %>
-        
-    <% } %>
-<% } %>
+        </ul>
+      </div>
+    </div>
+    
+  </div>
+</div>
