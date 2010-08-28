@@ -26,5 +26,5 @@ test("Click Event Test", function() {
         $(this).text('Onclick Value')
     });
     test.trigger('click');
-    equals($('#foobar').text(), "Onclick Value", "File 2: Created element with jQuery added it to DOM and pulled it out.");
+    equals($('#foobar').text(), "Onclick Value", "Had onclick event change the value of an element.");
 });
