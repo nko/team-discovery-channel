@@ -261,4 +261,3 @@ button {  width: auto; overflow: visible; }
   /* Prevent iOS, WinMobile from adjusting font size */
   html { -webkit-text-size-adjust:none; -ms-text-size-adjust:none; } 
 }
-

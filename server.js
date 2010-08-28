@@ -56,7 +56,7 @@ app.post('/tests/', function(req, res) {
             if (er) {
                 throw new Error(JSON.stringify(er));
             }
-            console.log('Successfully wrote record ' + doc.id + ' to CouchDB.');
+            sys.puts('Successfully wrote record ' + doc.id + ' to CouchDB.');
             res.redirect('/tests/' + doc.id);
         });
     } else {
@@ -78,17 +78,43 @@ app.get('/tests/:id', function(req, res) {
 });
 
 // Unit-Testing endpoint.
-app.get('/test', function(requ, res) {
-    var foo = new sandbox.Sandbox({
-        timeout: 20000
-    });
-    foo.run(sandbox, function(output) {
-        res.send(output);
-    });
-    
-/*    sandbox.executeTest( 'www.google.com' );*/
+app.post('/run-tests', function(req, res) {
+    if (req.body.url) {
+        var scriptRunner = new sandbox.Sandbox({
+            timeout: 10000,
+            url: req.body.url
+        });
+         
+        // http://github.com/nko/team-discovery-channel.
+        scriptRunner.run(sandbox, function(output) {
+            var error = '';
+           
+           var testOutput = [];
+            try {
+                var testOutput = JSON.parse(output);
+            } catch (e) {
+                error = 'Failed running tests.'
+            }
+            
+            res.render('view/run-tests.ejs', {
+                locals: {
+                    'error': error,
+                    'testOutput': testOutput,
+                    'url': req.body.url
+                }
+            });
+        });        
+    }
+});
 
-
+app.get('/run-tests', function(req, res) {
+    res.render('view/run-tests.ejs', {
+        locals: {
+            'error': '',
+            'testOutput': '',
+            'url': ''
+        }
+    }); 
 });
 
 var port = process.env.PORT || 8000;

@@ -14,6 +14,7 @@
  */
 
 exports.escape = function(html){
+    return html;
     return String(html)
         .replace(/&(?!\w+;)/g, '&amp;')
         .replace(/</g, '&lt;')

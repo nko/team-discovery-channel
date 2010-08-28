@@ -1,0 +1,41 @@
+<h1>Who Unit?</h1>
+
+<% if (error) { %>
+  <div class="error" id="error"><%= error %></div>
+<% } %>
+
+<form action="/run-tests" method="POST">.
+  <fieldset>
+    <legend>Add a new test</legend>
+    <p>
+      <label for="test-url">QUnit Index URL</label><br/>
+      <input id="test-url" type="input" name="url" value="http://github.com/nko/team-discovery-channel"/>
+    </p>
+
+    <p>
+      <input type="submit" value="Submit">
+    </p>
+  </fieldset>
+</form>
+
+<% if (url) { %>
+<h2>Unit Tests for <i><%= url %></i> </h2>
+    <% for (var i = 0, tests; (tests = testOutput[i]) != null; i++) { %>
+    
+        <h3><%= tests.name %></h3>
+    
+        <% for (var ii = 0, test; (test = tests.tests[ii]) != null; ii++) { %>
+    
+            <% if (test.result) { %>
+                <div class="success">
+                    <%= test.message %>
+                </div>
+            <% } else { %>
+                <div class="error">
+                    <%= test.message %>
+                </div>
+            <% } %>
+            
+        <% } %>
+    <% } %>
+<% } %>
