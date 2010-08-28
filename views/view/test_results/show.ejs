@@ -1,17 +1,17 @@
 <h2>Test Results for ... ???</h2>
-<% for (var i = 0, tests; (tests = test_result.output[i]) != null; i++) { %>
+<% for (var i = 0, test; (test = test_results.output[i]) != null; i++) { %>
 
-    <h3><%= tests.name %></h3>
+    <h3><%= test.name %></h3>
 
-    <% for (var ii = 0, test; (test = test_result.output[ii]) != null; ii++) { %>
+    <% for (var j = 0, assertion; (assertion = test.tests[j]) != null; j++) { %>
 
-        <% if (test.result) { %>
+        <% if (assertion.result) { %>
             <div class="success">
-                <%= test.message %>
+                <%= assertion.message %>
             </div>
         <% } else { %>
             <div class="error">
-                <%= test.message %>
+                <%= assertion.message %>
             </div>
         <% } %>
         

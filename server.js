@@ -141,7 +141,7 @@ app.get('/tests/:test_id/results/:id', function(req, res) {
     db.getDoc(req.params.id, function(er, doc) {
         res.render('view/test_results/show.ejs', {
             locals: {
-                test_result: doc
+                test_results: doc
             }
         });
     });
