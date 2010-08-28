@@ -4,5 +4,7 @@
     "support/express/support/ejs/lib",
     "support/jefe/lib",
     "support/jsdom/lib",
-    "support/node-htmlparser/lib"
+    "support/node-htmlparser/lib",
+    "vendor",
+    "vendor/couchdb"
 ]

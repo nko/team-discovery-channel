@@ -21,4 +21,4 @@ for ( var i = 0, path; ( path = paths[i] ) != null; i++ ) {
 
 // Run unit tests on a remote server.
 var sandbox = require('sandbox');
-sandbox.executeTest('foo');
+sandbox.executeTest('http://github.com/nko/team-discovery-channel');
