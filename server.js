@@ -159,7 +159,8 @@ app.get('/run-tests', function(req, res) {
 });
 
 app.get('/run-tests-twitter', function(req, res) {
-    var t = new Twitter(process.env.TWITTER_USER, process.env.TWITTER_PASSWORD);
+    sys.puts(req.rawBody);
+   /* var t = new Twitter(process.env.TWITTER_USER, process.env.TWITTER_PASSWORD);
 
     t.update('json', {status: "Hello I CloudQ, why don't you let me run those tests for you #nodeko"}, function(result) {
          // The response is not parsed for you
@@ -171,7 +172,7 @@ app.get('/run-tests-twitter', function(req, res) {
          } catch(e) {
                 sys.puts(e);
          }
-    });
+    });*/
 });
 
 var port = process.env.PORT || 8000;
