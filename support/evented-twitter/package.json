@@ -1,0 +1,16 @@
+{ "name" : "evented-twitter"
+, "description" : "An asynchronous twitter client for node.js"
+, "version" : "0.2.0"
+, "author" : "Marco Rogers (http://github.com/polotek)"
+, "repository" :
+  { "type" : "git"
+  , "url" : "http://github.com/polotek/evented-twitter.git"
+  }
+, "bugs" :
+  { "mail" : ""
+  , "web" : "http://github.com/polotek/evented-twitter/issues"
+  }
+, "directories" : { "lib" : "./lib/" }
+, "main": "./lib/evented-twitter"
+, "engines" : { "node" : ">=0.1.90" }
+}

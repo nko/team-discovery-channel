@@ -21,6 +21,7 @@ for ( var i = 0, path; ( path = paths[i] ) != null; i++ ) {
 
 var express = require('express');
 var sandbox = require('sandbox');
+var Twitter = require('evented-twitter').Twitter;
 
 // NPM Bundle
 require('./vendor');
@@ -154,6 +155,22 @@ app.get('/run-tests', function(req, res) {
             'testOutput': '',
             'url': ''
         }
+    });
+});
+
+app.get('/run-tests-twitter', function(req, res) {
+    var t = new Twitter(process.env.TWITTER_USER, process.env.TWITTER_PASSWORD);
+
+    t.update('json', {status: "Hello I CloudQ, why don't you let me run those tests for you #nodeko"}, function(result) {
+         // The response is not parsed for you
+         try {
+             sys.puts(result);
+             json = JSON.parse(result);
+             sys.puts(sys.inspect(json));
+             
+         } catch(e) {
+                sys.puts(e);
+         }
     });
 });
 
