@@ -25,6 +25,9 @@ var sandbox = require('sandbox');
 // NPM Bundle
 require('./vendor');
 var connect = require('connect');
+var couchdb = require('couchdb');
+
+var db = couchdb.createClient(5984, 'shodan.couchone.com').db('hooks');
 
 // Launch Express.
 var app = express.createServer();
@@ -48,16 +51,19 @@ app.get('/', function(req, res) {
 });
 
 app.post('/tests/', function(req, res) {
-  if (req.body.url) {
-    res.render('view/tests/show.html.ejs', {
-    });
-  } else {
-    res.render('view/index.ejs', {
-      locals: {
-        'error': 'Please provide a URL.'
-      }
-    });
-  }
+    if (req.body.url) {
+        db.saveDoc({url: req.body.url}, function(er, ok) {
+            if (er) throw new Error(JSON.stringify(er));
+            sys.puts('Successfully wrote to CouchDB!');
+        });
+        res.render('view/tests/show.html.ejs');
+    } else {
+        res.render('view/index.ejs', {
+            locals: {
+                'error': 'Please provide a URL.'
+            }
+        });
+    }
 });
 
 // Unit-Testing endpoint.
