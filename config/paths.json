@@ -6,5 +6,6 @@
     "support/jsdom/lib",
     "support/node-htmlparser/lib",
     "vendor",
-    "vendor/couchdb"
+    "vendor/couchdb",
+    "support/evented-twitter/lib"
 ]
