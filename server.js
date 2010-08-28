@@ -25,7 +25,7 @@ var sandbox = require('sandbox');
 // NPM Bundle
 require('./vendor');
 var connect = require('connect');
-var couchdb = require('vendor/couchdb');
+var couchdb = require('couchdb');
 
 var db = couchdb.createClient(5984, 'shodan.couchone.com').db('tests');
 
