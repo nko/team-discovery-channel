@@ -14,15 +14,17 @@ test("test_query_2", function() {
     equals($('#foobar').text(), "Hello World!", "File 2: Created element with jQuery added it to DOM and pulled it out.");
 });
 
-test("Awesome Test", function() {
+// Testing whether click events are working
+// proplerly in Who Unit?
+test("Click Event Test", function() {
     var element = $('<div></div>');
-    element.text('Goodbye');
+    element.text('Original Value');
     element.attr('id', 'foobar');
     $('body').append(element);
     var test = $('#foobar');
     test.click(function() {
-        $(this).text('WOOOOOOOOOO!')
+        $(this).text('Onclick Value')
     });
     test.trigger('click');
-    equals($('#foobar').text(), "Hello World!", "File 2: Created element with jQuery added it to DOM and pulled it out.");
+    equals($('#foobar').text(), "Onclick Value", "File 2: Created element with jQuery added it to DOM and pulled it out.");
 });
