@@ -70,41 +70,42 @@ app.post('/tests/', function(req, res) {
 
 app.get('/tests/:id', function(req, res) {
     db.getDoc(req.params.id, function(er, doc) {
-        sys.log(doc);
         res.render('view/tests/show.ejs', {
-            locals: { id: req.params.id, test: doc }
+            locals: { id: req.params.id, test: doc, error: null }
         });
     });
 });
 
 // Unit-Testing endpoint.
-app.post('/run-tests', function(req, res) {
-    if (req.body.url) {
-        var scriptRunner = new sandbox.Sandbox({
-            timeout: 10000,
-            url: req.body.url
-        });
-         
-        // http://github.com/nko/team-discovery-channel.
-        scriptRunner.run(sandbox, function(output) {
-            var error = '';
-           
-           var testOutput = [];
-            try {
-                var testOutput = JSON.parse(output);
-            } catch (e) {
-                error = 'Failed running tests.'
-            }
-            
-            res.render('view/run-tests.ejs', {
-                locals: {
-                    'error': error,
-                    'testOutput': testOutput,
-                    'url': req.body.url
-                }
+app.post('/tests/:id/run', function(req, res) {
+    db.getDoc(req.params.id, function(er, doc) {
+        if (doc.url) {
+            var scriptRunner = new sandbox.Sandbox({
+                timeout: 10000,
+                url: doc.url
             });
-        });        
-    }
+
+            // http://github.com/nko/team-discovery-channel.
+            scriptRunner.run(sandbox, function(output) {
+                var error = '';
+
+               var testOutput = [];
+                try {
+                    var testOutput = JSON.parse(output);
+                } catch (e) {
+                    error = 'Failed running tests.'
+                }
+
+                res.render('view/run-tests.ejs', {
+                    locals: {
+                        'error': error,
+                        'testOutput': testOutput,
+                        'url': doc.url
+                    }
+                });
+            });
+        }
+    });
 });
 
 app.get('/run-tests', function(req, res) {
@@ -114,7 +115,7 @@ app.get('/run-tests', function(req, res) {
             'testOutput': '',
             'url': ''
         }
-    }); 
+    });
 });
 
 var port = process.env.PORT || 8000;

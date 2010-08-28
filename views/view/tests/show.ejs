@@ -1,1 +1,11 @@
-Hi <%= id %> <%= test.url %>
+<h1>Who Unit?</h1>
+
+<p>
+  Congratulations. We've received your test.
+</p>
+
+<div class="success"><%= test.url %></div>
+
+<form action="/tests/<%= id %>/run" method="POST">
+  <input type="submit" value="Run Test"/>
+</form>
