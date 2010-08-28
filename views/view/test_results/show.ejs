@@ -1,0 +1,19 @@
+<h2>Test Results for ... ???</h2>
+<% for (var i = 0, tests; (tests = test_result.output[i]) != null; i++) { %>
+
+    <h3><%= tests.name %></h3>
+
+    <% for (var ii = 0, test; (test = test_result.output[ii]) != null; ii++) { %>
+
+        <% if (test.result) { %>
+            <div class="success">
+                <%= test.message %>
+            </div>
+        <% } else { %>
+            <div class="error">
+                <%= test.message %>
+            </div>
+        <% } %>
+        
+    <% } %>
+<% } %>
