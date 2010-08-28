@@ -27,7 +27,7 @@ require('./vendor');
 var connect = require('connect');
 var couchdb = require('couchdb');
 
-var db = couchdb.createClient(5984, 'shodan.couchone.com').db('hooks');
+var db = couchdb.createClient(5984, 'shodan.couchone.com').db('tests');
 
 // Launch Express.
 var app = express.createServer();
@@ -72,7 +72,7 @@ app.get('/tests/:id', function(req, res) {
     db.getDoc(req.params.id, function(er, doc) {
         sys.log(doc);
         res.render('view/tests/show.html.ejs', {
-            locals: { id: req.params.id, hook: doc }
+            locals: { id: req.params.id, test: doc }
         });
     });
 });
