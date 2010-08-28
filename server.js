@@ -40,14 +40,16 @@ db.saveDesign('cloudq', {
         // View function returns *strictly* tests
         "tests": {
             map: function(doc) {
-                emit(doc.id, doc);
+                if (doc.type == 'test') {
+                    emit(doc.id, doc);
+                }
             }
         },
         // View function returns *strictly* test_results
         "test_results": {
             map: function(doc) {
-                if (doc.type == 'test_results') {
-                    emit(doc.id, doc);
+                if (doc.type == 'test_result') {
+                    emit(doc.date, doc);
                 }
             }
         }
@@ -128,9 +130,15 @@ app.post('/tests/:id/run', function(req, res) {
                     error = 'Failed running tests.'
                 }
 
-                db.saveDoc({test_id: req.params.id, type: 'test_result', output: testOutput }, function(er, doc) {
-                    res.redirect('/tests/' + req.params.id + '/results/' + doc.id);
-                });
+                db.saveDoc({
+                    test_id: req.params.id,
+                    date: new Date(),
+                    type: 'test_result',
+                    output: testOutput },
+                    function(er, doc) {
+                        res.redirect('/tests/' + req.params.id + '/results/' + doc.id);
+                    }
+                );
             });
         }
     });
@@ -160,7 +168,7 @@ app.get('/run-tests', function(req, res) {
 
 app.post('/run-tests-twitter', function(req, res) {
     sys.puts(req.body.payload);
-    
+
    /* var t = new Twitter(process.env.TWITTER_USER, process.env.TWITTER_PASSWORD);
 
     t.update('json', {status: "Hello I CloudQ, why don't you let me run those tests for you #nodeko"}, function(result) {
@@ -169,7 +177,7 @@ app.post('/run-tests-twitter', function(req, res) {
              sys.puts(result);
              json = JSON.parse(result);
              sys.puts(sys.inspect(json));
-             
+
          } catch(e) {
                 sys.puts(e);
          }
