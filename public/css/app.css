@@ -13,7 +13,7 @@ a img {border:none;}
 /* OPTIMIZATION FOR BROWSER QUIRKS */
 
 html { overflow-y: scroll; } /* Forces a vertical scrollbar in Mozilla */
-img { -ms-interpolation-mode: bicubic; } /* Makes IE scale /img smoothly */
+img { -ms-interpolation-mode: bicubic; } /* Makes IE scale images smoothly */
 a:active, a:focus { outline: none; } /* Disables the dotted outline FireFox puts on active links */
 
 
@@ -22,6 +22,7 @@ a:active, a:focus { outline: none; } /* Disables the dotted outline FireFox puts
 	width: 450px;
 	margin: 0 auto;	
 	padding-top: 40px;
+	padding-bottom: 20px;
 }
 
 html {
@@ -157,3 +158,17 @@ input {
   
   
   
+/* FOOTER */
+.footer {
+  font-size: 12px; 
+  color: #1f648b;
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.5);
+  line-height: 18px;
+  padding: 20px 0 0 0;
+}
+a, a:visited, a:active {
+  color: #1f648b;
+}
+  a:hover {
+    color: #0f415d;
+  }
