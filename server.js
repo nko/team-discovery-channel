@@ -52,11 +52,13 @@ app.get('/', function(req, res) {
 
 app.post('/tests/', function(req, res) {
     if (req.body.url) {
-        db.saveDoc({url: req.body.url}, function(er, ok) {
-            if (er) throw new Error(JSON.stringify(er));
-            sys.puts('Successfully wrote to CouchDB!');
+        db.saveDoc({url: req.body.url}, function(er, doc) {
+            if (er) {
+                throw new Error(JSON.stringify(er));
+            }
+            console.log('Successfully wrote record ' + doc.id + ' to CouchDB.');
+            res.redirect('/tests/' + doc.id);
         });
-        res.render('view/tests/show.html.ejs');
     } else {
         res.render('view/index.ejs', {
             locals: {
@@ -64,6 +66,15 @@ app.post('/tests/', function(req, res) {
             }
         });
     }
+});
+
+app.get('/tests/:id', function(req, res) {
+    db.getDoc(req.params.id, function(er, doc) {
+        sys.log(doc);
+        res.render('view/tests/show.html.ejs', {
+            locals: { id: req.params.id, hook: doc }
+        });
+    });
 });
 
 // Unit-Testing endpoint.
