@@ -7,3 +7,15 @@ h2. The Team
 *Ben Coe* @benjamincoe
 *Ben Vinegar* @bentlegen
 *Jaco Joubert* @designsense
+
+h2. Libraries
+
+The following libraries are being used.
+
+git submodule add http://github.com/visionmedia/express.git support/express
+
+git submodule add http://github.com/tmpvar/jsdom.git support/jsdom
+
+git submodule add http://github.com/tautologistics/node-htmlparser.git support/node-htmlparser
+
+git submodule add http://github.com/fictorial/jefe.git support/jefe

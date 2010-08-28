@@ -1,0 +1,12 @@
+[submodule "support/express"]
+	path = support/express
+	url = http://github.com/visionmedia/express.git
+[submodule "support/jsdom"]
+	path = support/jsdom
+	url = http://github.com/tmpvar/jsdom.git
+[submodule "support/node-htmlparser"]
+	path = support/node-htmlparser
+	url = http://github.com/tautologistics/node-htmlparser.git
+[submodule "support/jefe"]
+	path = support/jefe
+	url = http://github.com/fictorial/jefe.git
