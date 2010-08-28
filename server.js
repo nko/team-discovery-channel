@@ -1,4 +1,4 @@
-/**
+ /**
  * Team Discovery Channel 2010
  *
  * Our contest entry for the 2010 Knode-Knock-Out competition. We're
@@ -27,8 +27,31 @@ require('./vendor');
 var connect = require('connect');
 var couchdb = require('couchdb');
 
-var db = couchdb.createClient(5984, 'shodan.couchone.com').db('tests');
+var db = couchdb
+    .createClient(5984, 'shodan.couchone.com', 'user', 'pass')
+    .db('cloudq');
 
+db.saveDesign('cloudq', {
+    views: {
+        "tests": {
+            map: function(doc) {
+                emit(doc.id, doc);
+            }
+        },
+        "test_results": {
+            map: function(doc) {
+                if (doc.type == 'test_results') {
+                    emit(doc.id, doc);
+                }
+            }
+        }
+    }}, function(er, doc) {
+        if (er) {
+            throw new Error(JSON.stringify(er));
+        }
+        sys.log(doc);
+    }
+);
 // Launch Express.
 var app = express.createServer();
 
@@ -52,7 +75,7 @@ app.get('/', function(req, res) {
 
 app.post('/tests/', function(req, res) {
     if (req.body.url) {
-        db.saveDoc({url: req.body.url}, function(er, doc) {
+        db.saveDoc({url: req.body.url, type: 'test'}, function(er, doc) {
             if (er) {
                 throw new Error(JSON.stringify(er));
             }
