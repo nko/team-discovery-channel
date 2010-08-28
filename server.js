@@ -27,11 +27,21 @@ var app = express.createServer();
 // Launch Express.
 app.listen(parseInt(process.env.PORT || 8000), null);
 
-// The actual endpoints.
+// Index.
 app.get('/', function(req, res) {
     res.render('view/index.ejs', {
         locals: {
             foo: 'Hello World'
         }
-    }) ;
+    });
 })
+
+app.get('/test', function(requ, res) {
+    
+    
+    res.render('view/index.ejs', {
+        locals: {
+            foo: 'Hello World'
+        }
+    });
+});

@@ -1,5 +1,6 @@
 [
     "support/express/lib",
     "support/express/support/connect/lib",
-    "support/express/support/ejs/lib"
+    "support/express/support/ejs/lib",
+    "support/jefe/lib"
 ]
