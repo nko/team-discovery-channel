@@ -1,7 +1,8 @@
 {
-  "name":"nko",
-  "version":"0.0.1",
-  "dependencies":{
-    "connect":""
+  "name": "nko",
+  "version": "0.0.1",
+  "dependencies": {
+    "connect": ">=0.2.4",
+    "request": ">=0.10.0"
   }
 }
