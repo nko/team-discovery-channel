@@ -49,7 +49,7 @@ app.get('/', function(req, res) {
 });
 
 app.post('/tests/', function(req, res) {
-  if (req.param('url')) {
+  if (req.body.url) {
     res.render('view/tests/show.html.ejs', {
     });
   } else {
