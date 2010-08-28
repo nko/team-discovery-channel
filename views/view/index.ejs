@@ -1,6 +1,10 @@
-<h1>Submit Something</h1>
+<h1>Welcome to the social</h1>
+
+<% if (error) { %>
+  <div id="error"><%= error %></div>
+<% } %>
 
 <form action="/tests/" method="POST">
-  <label for="test-url">URL:</label> <input id="test-url" type="input" name="url"/><br/>
+  <label for="test-url">URL:</label> <input id="test-url" type="input" name="url" value=""/><br/>
   <input type="submit"/>
 </form>

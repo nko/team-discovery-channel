@@ -42,14 +42,23 @@ app.configure(function() {
 app.get('/', function(req, res) {
     res.render('view/index.ejs', {
         locals: {
+            error: null,
             foo: 'Hello World'
         }
     });
 });
 
 app.post('/tests/', function(req, res) {
-  res.render('view/tests/show.html.ejs', {
-  });
+  if (req.param('url')) {
+    res.render('view/tests/show.html.ejs', {
+    });
+  } else {
+    res.render('view/index.ejs', {
+      locals: {
+        'error': 'Please provide a URL.'
+      }
+    });
+  }
 });
 
 // Unit-Testing endpoint.
@@ -58,6 +67,7 @@ app.get('/test', function(requ, res) {
 
     res.render('view/index.ejs', {
         locals: {
+            error: null,
             foo: 'Hello World'
         }
     });
