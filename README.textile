@@ -1,0 +1,9 @@
+h1. Team Discovery Channel
+
+Our entry for the Node.js KO. We are planning on doing something involving WebHooks and Unit-Testing.
+
+h2. The Team
+
+*Ben Coe* @benjamincoe
+*Ben Vinegar* @bentlegen
+*Jaco Joubert* @designsense
