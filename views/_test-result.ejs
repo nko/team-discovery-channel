@@ -1,0 +1,30 @@
+<div class="outer-box <% if (results.passed == results.total) {%>green<%}else{%>red<%}%>">
+  <div class="outer-box-inset">
+    <div class="header test-result-toggle">
+      <a class="toggle-close" href="#"></a>
+      <div class="title"><%= results.pretty_date %></div>
+      <div class="score"><%= results.passed %> / <%= results.total %></div>
+    </div>
+  
+    <div class="inner-box" style="display: visible;">
+      <div class="inner-box-inset">
+        <ul class="tests">
+        <% for (var i = 0, test; (test = results.output[i]) != null; i++) { %>
+
+            <li class="header"><%= test.name %></li>
+
+            <% for (var j = 0, assertion; (assertion = test.tests[j]) != null; j++) { %>
+
+                <% if (assertion.result) { %>
+                    <li class="passed"><%= j + 1 %>. <%= assertion.message %></li>
+                <% } else { %>
+                    <li class="failed"><%= j + 1 %>. <%= assertion.message %></li>
+                <% } %>
+
+            <% } %>
+        <% } %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
