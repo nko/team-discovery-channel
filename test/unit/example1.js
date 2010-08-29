@@ -2,7 +2,7 @@ module('nko');
 
 test("test_assertions", function() {
     equals(1, 1, "Simple assertion test.");
-   //  equals(jQuery('#content').html(), "Some Content", "Assert that we get the content of a div with an ID.");
+     equals(jQuery('#content').html(), "Some Content", "Assert that we get the content of a div with an ID.");
 });
 
 test("test_jquery", function() {
