@@ -2,30 +2,31 @@
   <div class="outer-box-inset">
     <div class="inner-box">
       <div class="inner-box-inset">
-        <p>
-          Congratulations. We've received your test.
-
-          <div class="success"><%= test.url %></div>
-
+        <p style="margin-bottom:1em">
+          Our hyper intelligent and self-aware cloud servers have analyzed and run your unit tests. Results are below!
         </p>
         
-        <form action="/tests/<%= id %>/run" method="POST">
-          <a class="button" href="#" onclick="document.forms[0].submit()"></a>
-          <input type="submit" style="display: none" value="Run Test"/><!-- allows enter to submit form -->
-        </form>
+        <p>
+          To set up a post-commit hook for your GitHub repo, <a href="#">click here</a>. We'll even notify you when your build breaks!
+        </p>
+        
         <div style="clear:both"></div>
       </div>
     </div>
   </div>
 </div>
 
-<a href="#">Get GitHub Post-Commit Hook</a>
-<div class="outer-box" id="webhook">
+<div class="outer-box" id="webhook" style="display:none">
   <div class="outer-box-inset">
       <label for="test-url">Twitter Handle</label>
       <input id="twitter-handle" type="input" name="twitter-handle" />
       <label style="margin-top: 5px"  for="twitter">GitHub Hook</label>
       <input id="twitter" type="input" name="twitter" value=""/>
+      <p>
+        To set up a post-commit hook for your GitHub repo, <a href="#">click here</a>. We'll even notify you when your build breaks!
+      </p>
+      
+      <div style="clear:both"></div>
   </div>
 </div>
 
@@ -35,13 +36,13 @@
 
 <div class="outer-box">
   <div class="outer-box-inset">
-    <div class="header">
+    <div class="header test-result-toggle">
       <a class="toggle-open" href="#"></a>
       <div class="title">c3dd5f... <%= results.date %></div>
       <div class="score"> 80 / 84</div>
     </div>
     
-    <div class="inner-box">
+    <div class="inner-box" style="display:none">
       <div class="inner-box-inset">
         <ul class="tests">
         <% for (var i = 0, test; (test = results.output[i]) != null; i++) { %>

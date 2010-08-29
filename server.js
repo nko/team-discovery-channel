@@ -98,18 +98,17 @@ app.get('/', function(req, res) {
 // POST a new test record
 app.post('/tests/', function(req, res) {
     if (req.body.url) {
-        
+
         var id = crypto.createHash('md5').update(req.body.url).digest('hex');
-                
         db.saveDoc(id, {url: req.body.url, type: 'test'}, function(er, doc) {
             if (er.error !== 'conflict') {
                 // We're fine with conflicts; it means id already exists, but
                 // because we hash url to receive id, the url couldn't have changed
                 throw new Error(JSON.stringify(er));
             }
-            runTests(id, req.body.url);
-
-            res.redirect( '/tests/' + id );
+            runTests(id, req.body.url, function() {
+                res.redirect( '/tests/' + id );
+            });
         });
     } else {
         res.render('view/index.ejs', {

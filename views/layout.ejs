@@ -19,5 +19,15 @@
     </div>
 
     <a href="http://nodeknockout.com/teams/team-discovery-channel" target="nko" title="Help me win Node.js KO!"><img style="position: fixed; top: 5px; right: 5px; border: 0px;" src="http://nodeknockout.com/images/voteko.png" alt="Help me win Node.js KO!" /></a>
+    
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script>
+      $(function() {
+        $('.test-result-toggle').click(function() {
+          $(this).siblings('.inner-box').toggle();
+          return false;
+        });
+      });
+    </script>
   </body>
 </html>
