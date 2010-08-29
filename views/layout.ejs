@@ -80,8 +80,8 @@
                             $('#test-results-loading').show();
                             setTimeout(checkData, 1000);
                         } else {
+                            $('#test-results-loading').hide();
                             if (data.content) {
-                              $('#test-results-loading').hide();
                                 var element = $(data.content);
                                 $('#webhook').after(element);
                             }

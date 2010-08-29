@@ -121,23 +121,7 @@ app.post('/tests/', function(req, res) {
         db.saveDoc(id, {url: req.body.url, type: 'test', date: new Date() }, function(er, doc) {
 
             // Asynchronously run tests
-            testStates[id] = {};
-            testStates[id].status = "running";
-            runTests(id, req.body.url, function( data ) {
-                try {
-                    var body = ''+fs.readFileSync("views/_test-result.ejs");
-                    var content = ejs.render(body, {
-                        locals: {
-                            results: data
-                        }
-                    });
-                    testStates[id].content = content;
-                    testStates[id].status = "complete";
-                } catch (e) {
-                    testStates[id].status = 'failure';
-                    sys.puts(e);
-                }
-            });
+            runTests(id, req.body.url);
 
             res.redirect( '/tests/' + id );
         });
@@ -168,6 +152,10 @@ function runTests(test_id, url, callback, twitter, gitPayload) {
     if (!url) {
         return;
     }
+
+    // Asynchronously run tests
+    testStates[test_id] = {};
+    testStates[test_id].status = "running";
 
     var scriptRunner = new sandbox.Sandbox({
         timeout: 10000,
@@ -205,16 +193,35 @@ function runTests(test_id, url, callback, twitter, gitPayload) {
             url: url,
             type: 'test_result',
             output: testOutput },
-            
-            callback ({
-                test_id: test_id,
-                date: new Date(),
-                total: total,
-                passed: passed,
-                url: url,
-                type: 'test_result',
-                output: testOutput
-            })
+
+            function() {
+                var data = {
+                    test_id: test_id,
+                    date: new Date(),
+                    total: total,
+                    passed: passed,
+                    url: url,
+                    type: 'test_result',
+                    output: testOutput
+                };
+
+                try {
+                    var body = ''+fs.readFileSync("views/_test-result.ejs");
+                    var content = ejs.render(body, {
+                        locals: {
+                            results: data
+                        }
+                    });
+                    testStates[test_id].content = content;
+                    testStates[test_id].status = "complete";
+                } catch (e) {
+                    testStates[test_id].status = 'failure';
+                    sys.puts(e);
+                };
+                if (callback) {
+                    callback (data);
+                }
+            }
         );
     });
 }
@@ -329,9 +336,9 @@ app.get('/tests/:id', function(req, res) {
 // Execute test runner, then redirect to results (stored in DB)
 app.post('/tests/:id/run', function(req, res) {
     db.getDoc(req.params.id, function(er, doc) {
-        runTests(doc.id, doc.url, function(er, testResults) {
-            res.redirect('/tests/' + req.params.id);
+        runTests(req.params.id, doc.url, function(er, testResults) {
         });
+        res.redirect('/tests/' + req.params.id);
     });
 });
 
