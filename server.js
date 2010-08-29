@@ -166,7 +166,7 @@ app.get('/tests/:id', function(req, res) {
 // Execute test runner, then redirect to results (stored in DB)
 app.post('/tests/:id/run', function(req, res) {
     db.getDoc(req.params.id, function(er, doc) {
-        runTests(doc.id, doc.url, function(er, testResults) {
+        runTests(doc.id, doc.url, function(er, testResults) {            
             res.redirect('/tests/' + req.params.id + '/results/' + testResults.id);
         });
     });
