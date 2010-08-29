@@ -211,7 +211,7 @@ app.get('/run-tests', function(req, res) {
     }*/
 });
 
-app.get('/hooks/github', function(req, res) {
+app.post('/hooks/github', function(req, res) {
     
     try {
         var gitPayload = JSON.req.body.payload;
