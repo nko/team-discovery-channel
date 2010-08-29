@@ -98,7 +98,7 @@ input {
   margin-right: 20px;
   outline: none;
   border: none;
-  background: url("images/input.png") no-repeat;
+  background: url("/img/input.png") no-repeat;
   height: 25px;
   font-size: 16px;
   font-family: Helvetica, Arial, Tahoma, sans-serif;
@@ -109,16 +109,16 @@ input {
   display: block;
   height: 32px;
   width: 65px;
-  background: url("images/button.png") no-repeat;
+  background: url("/img/button.png") no-repeat;
   position: absolute;
   top: 50px;
   right: 22px;
 }
   .button:hover {
-    background: url("images/button.png") 0px -32px no-repeat;
+    background: url("/img/button.png") 0px -32px no-repeat;
   }
   .button:active {
-    background: url("images/button.png") 0px -64px no-repeat;
+    background: url("/img/button.png") 0px -64px no-repeat;
   }
 
 
