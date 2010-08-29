@@ -1,23 +1,20 @@
-<% if (error) { %>
-  <div class="error" id="error"><%= error %></div>
-<% } %>
-
 <div class="outer-box">
   <div class="outer-box-inset">
-
-  
     <form action="/tests/" method="POST">
-    
+
       <label for="test-url">GitHub URL</label>
-      <input id="test-url" type="input" name="url" value="http://github.com/nko/team-discovery-channel"/>
+      <input id="test-url" type="input" name="url" value="<%= url %>" placeholder="http://github.com/username/repo"/>
       <a class="button" href="#" onclick="document.forms[0].submit()"></a>
       <input type="submit" style="display: none" /><!-- allows enter to submit form -->
+      <% if (error) { %>
+        <div class="error" id="error"><%= error %></div>
+      <% } %>
   </div>
 </div>
 
 <div class="outer-box">
   <div class="outer-box-inset">
-    
+
     <div class="inner-box">
       <div class="inner-box-inset">
         <p>
@@ -25,7 +22,7 @@
         </p>
       </div>
     </div>
-    
+
   </div>
 </div>
 
@@ -36,7 +33,7 @@
       <a class="toggle-open" href="#"></a>
       <div class="title">Recently Added</div>
     </div>
-    
+
     <div class="inner-box" style="display:none">
       <div class="inner-box-inset">
         <% for (var i = 0; i < tests.length; i++) { %>

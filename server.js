@@ -92,8 +92,8 @@ app.get('/', function(req, res) {
         res.render('view/index.ejs', {
             locals: {
                 error: null,
-                foo: 'Hello World',
-                tests: result.rows
+                tests: result.rows,
+                url: ''
             }
         });
     });
@@ -113,7 +113,9 @@ app.post('/tests/', function(req, res) {
     } else {
         res.render('view/index.ejs', {
             locals: {
-                'error': 'Please provide a URL.'
+                'error': 'Please provide a URL.',
+                url: req.body.url,
+                tests: [] // NEED TO FIX THIS
             }
         });
     }
