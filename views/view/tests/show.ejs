@@ -19,7 +19,7 @@
   </div>
 </div>
 
-< if (test.twitter > "") { >
+
 <div class="outer-box">
   <div class="outer-box-inset">
     <div class="inner-box">
@@ -35,4 +35,17 @@
     </div>
   </div>
 </div>
-< } >
+
+<% for (var i = 0; i < test_results.rows.length; i++) { %>
+<% test = test_results.rows[i].value %>
+
+<div class="outer-box">
+  <div class="outer-box-inset">
+    <div class="header">
+      <a class="toggle-open" href="#"></a>
+      <div class="title">c3dd5f... <%= test.date %></div>
+      <div class="score"> 80 / 84</div>
+    </div>
+  </div>
+</div>
+<% } %>
