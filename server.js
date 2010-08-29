@@ -134,6 +134,7 @@ app.post('/tests/', function(req, res) {
                     testStates[id].content = content;
                     testStates[id].status = "complete";
                 } catch (e) {
+                    testStates[id].status = 'failure';
                     sys.puts(e);
                 }
             });
