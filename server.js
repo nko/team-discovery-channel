@@ -156,12 +156,26 @@ function runTests(test_id, url, callback) {
     });
 }
 
+function ISODateString(d){
+ function pad(n){return n<10 ? '0'+n : n}
+ return d.getUTCFullYear()+'-'
+      + pad(d.getUTCMonth()+1)+'-'
+      + pad(d.getUTCDate())+'T'
+      + pad(d.getUTCHours())+':'
+      + pad(d.getUTCMinutes())+':'
+      + pad(d.getUTCSeconds())+'Z'}
+
 // GET a test record
 app.get('/tests/:id', function(req, res) {
     db.getDoc(req.params.id, function(er, test) {
-        // For some reason couch needs things these quote characters here
-        var endkey = '["' + req.params.id + ',' + (new Date()) + '"]';
-        db.view('cloudq', 'test_results', {limit: 5, endkey: endkey, descending: 'true' }, function(er, testResults) {
+        // Mangling together this url myself, because I couldn't get node-couchdb
+        // to like these queries
+
+        // HACK: Sort keys by [test_id, start of unix datetime] to [test_id, current time]
+        var startkey = '["' + req.params.id + '","' + ISODateString(new Date()) + '"]';
+        var endkey = '["' + req.params.id + '","' + ISODateString(new Date(0)) + '"]';
+        var url = '/_design/cloudq/_view/test_results?startkey=' + encodeURIComponent(startkey) + '&endkey=' + encodeURIComponent(endkey) + '&descending=true&limit=5';
+        db.request(url, function(er, testResults) {
             res.render('view/tests/show.ejs', {
                 locals: { id: req.params.id, test: test, error: null, test_results: testResults }
             });
