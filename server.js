@@ -9,6 +9,7 @@ require.paths.unshift('lib/discovery');
 
 var sys = require('sys');
 var helpers = require('helpers');
+var crypto = require('crypto');
 
 // Load in paths that should be search when running
 // require. Makes our lives easier when dealing with 3rd
@@ -23,7 +24,7 @@ var express = require('express');
 var sandbox = require('sandbox');
 
 // NPM Bundle
-require('./vendor');
+require(__dirname + '/vendor');
 var connect = require('connect');
 var couchdb = require('couchdb');
 
@@ -97,12 +98,15 @@ app.get('/', function(req, res) {
 // POST a new test record
 app.post('/tests/', function(req, res) {
     if (req.body.url) {
-        db.saveDoc({url: req.body.url, type: 'test'}, function(er, doc) {
-            if (er) {
+        var id = crypto.createHash('md5').update(req.body.url).digest('hex')
+        db.saveDoc(id, {url: req.body.url, type: 'test'}, function(er, doc) {
+            if (er.error !== 'conflict') {
+                // We're fine with conflicts; it means id already exists, but
+                // because we hash url to receive id, the url couldn't have changed
                 throw new Error(JSON.stringify(er));
             }
-            sys.puts('Successfully wrote record ' + doc.id + ' to CouchDB.');
-            res.redirect('/tests/' + doc.id);
+            runTests(id, req.body.url);
+            res.redirect('/tests/' + id);
         });
     } else {
         res.render('view/index.ejs', {
@@ -112,6 +116,37 @@ app.post('/tests/', function(req, res) {
         });
     }
 });
+
+function runTests(test_id, url, callback) {
+    if (!url) {
+        return;
+    }
+
+    var scriptRunner = new sandbox.Sandbox({
+        timeout: 10000,
+        url: url
+    });
+
+    // http://github.com/nko/team-discovery-channel.
+    scriptRunner.run(sandbox, function(output) {
+        var error = '';
+
+       var testOutput = [];
+        try {
+            var testOutput = JSON.parse(output);
+        } catch (e) {
+            error = 'Failed running tests.'
+        }
+
+        db.saveDoc({
+            test_id: test_id,
+            date: new Date(),
+            type: 'test_result',
+            output: testOutput },
+            callback
+        );
+    });
+}
 
 // GET a test record
 app.get('/tests/:id', function(req, res) {
@@ -125,34 +160,9 @@ app.get('/tests/:id', function(req, res) {
 // Execute test runner, then redirect to results (stored in DB)
 app.post('/tests/:id/run', function(req, res) {
     db.getDoc(req.params.id, function(er, doc) {
-        if (doc.url) {
-            var scriptRunner = new sandbox.Sandbox({
-                timeout: 10000,
-                url: doc.url
-            });
-
-            // http://github.com/nko/team-discovery-channel.
-            scriptRunner.run(sandbox, function(output) {
-                var error = '';
-
-               var testOutput = [];
-                try {
-                    var testOutput = JSON.parse(output);
-                } catch (e) {
-                    error = 'Failed running tests.'
-                }
-
-                db.saveDoc({
-                    test_id: req.params.id,
-                    date: new Date(),
-                    type: 'test_result',
-                    output: testOutput },
-                    function(er, doc) {
-                        res.redirect('/tests/' + req.params.id + '/results/' + doc.id);
-                    }
-                );
-            });
-        }
+        runTests(doc.id, doc.url, function(er, testResults) {
+            res.redirect('/tests/' + req.params.id + '/results/' + testResults.id);
+        });
     });
 });
 
