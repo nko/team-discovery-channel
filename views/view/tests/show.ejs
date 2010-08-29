@@ -8,6 +8,7 @@
           <div class="success"><%= test.url %></div>
 
         </p>
+        
         <form action="/tests/<%= id %>/run" method="POST">
           <a class="button" href="#" onclick="document.forms[0].submit()"></a>
           <input type="submit" style="display: none" value="Run Test"/><!-- allows enter to submit form -->

@@ -177,40 +177,6 @@ app.get('/tests/:test_id/results/:id', function(req, res) {
     });
 });
 
-// ??? Deprecated ???
-app.get('/run-tests', function(req, res) {
- /*   var gitPayload = helpers.loadJSONConfiguration('githook');
-    var url = gitPayload.repository.url;
-
-    if (url) {
-        var scriptRunner = new sandbox.Sandbox({
-            timeout: 10000,
-            url: url
-        });
-                
-        // http://github.com/nko/team-discovery-channel.
-        scriptRunner.run(sandbox, function(output) {
-            var error = '';
-
-           var testOutput = [];
-            try {
-                var testOutput = JSON.parse(output);
-            } catch (e) {
-                error = 'Failed running tests.';
-            }
-            
-            sandbox.handleBuildTweets(gitPayload, testOutput);
-
-            res.render('view/index.ejs', {
-                locals: {
-                    error: null,
-                    foo: 'Hello World'
-                }
-            });
-        });
-    }*/
-});
-
 app.post('/hooks/github', function(req, res) {
     
     try {
