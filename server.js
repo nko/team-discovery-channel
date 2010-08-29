@@ -27,8 +27,28 @@ require('./vendor');
 var connect = require('connect');
 var couchdb = require('couchdb');
 
+// Launch Express.
+var app = express.createServer();
+
+app.configure(function() {
+    app.use(connect.conditionalGet());
+    app.use(connect.gzip());
+    app.use(connect.bodyDecoder());
+    app.use(connect.logger());
+    app.use(express.staticProvider(__dirname + '/public'));
+});
+
+app.configure('development', function() {
+    var env = helpers.loadJSONConfiguration('local_env');
+    for (var key in env) {
+        if (env.hasOwnProperty(key)) {
+            process.env[key] = env[key];
+        }
+    }
+});
+
 var db = couchdb
-    .createClient(5984, 'shodan.couchone.com', 'user', 'pass')
+    .createClient(5984, 'shodan.couchone.com', process.env.COUCH_USER, process.env.COUCH_PASSWORD)
     .db('cloudq');
 
 // Create the design document. If it already exists, it won't
@@ -59,26 +79,6 @@ db.saveDesign('cloudq', {
         }
     }
 );
-
-// Launch Express.
-var app = express.createServer();
-
-app.configure(function() {
-    app.use(connect.conditionalGet());
-    app.use(connect.gzip());
-    app.use(connect.bodyDecoder());
-    app.use(connect.logger());
-    app.use(express.staticProvider(__dirname + '/public'));
-});
-
-app.configure('development', function() {
-    var env = helpers.loadJSONConfiguration('local_env');
-    for (var key in env) {
-        if (env.hasOwnProperty(key)) {
-            process.env[key] = env[key];
-        }
-    }
-});
 
 app.configure('production', function() {
     // TODO?
