@@ -93,7 +93,7 @@ app.get('/', function(req, res) {
             locals: {
                 error: null,
                 tests: result.rows,
-                url: ''
+                url: '', // http://github.com/nko/team-discovery-channel
             }
         });
     });
