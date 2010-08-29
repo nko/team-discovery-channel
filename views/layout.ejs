@@ -68,9 +68,9 @@
         // Check whether tests are currently running.
         if (id > '') {
             var redirect = false;
+              var wasRunning = false;
             (function checkData() {
               
-              var wasRunning = false;
         		$.ajax({
         			url: '/tests/running/' + id ,
         			data: {},
