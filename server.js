@@ -208,7 +208,7 @@ app.post('/hooks/github/:twitter', function(req, res) {
                     error = 'Failed running tests.';
                 }
 
-                sandbox.handleBuildTweets(gitPayload, testOutput);
+                sandbox.handleBuildTweets(gitPayload, testOutput, req.params.twitter);
 
                 res.render('view/index.ejs', {
                     locals: {
