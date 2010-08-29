@@ -169,7 +169,7 @@ app.get('/tests/:test_id/results/:id', function(req, res) {
 
 // ??? Deprecated ???
 app.get('/run-tests', function(req, res) {
-    var gitPayload = helpers.loadJSONConfiguration('githook');
+ /*   var gitPayload = helpers.loadJSONConfiguration('githook');
     var url = gitPayload.repository.url;
 
     if (url) {
@@ -198,7 +198,7 @@ app.get('/run-tests', function(req, res) {
                 }
             });
         });
-    }
+    }*/
 });
 
 app.post('/hooks/github', function(req, res) {
