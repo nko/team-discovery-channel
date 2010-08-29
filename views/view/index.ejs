@@ -5,12 +5,12 @@
     <% } %>
   
     <form action="/tests/" method="POST">
-    <label for="test-url">Twitter (Optional)</label>
-    <input id="test-url" type="input" name="twitter" value=""/>
     
       <label for="test-url">GitHub URL</label>
       <input id="test-url" type="input" name="url" value="http://github.com/nko/team-discovery-channel"/>
-      <a style="margin-top: 72px;" class="button" href="#" onclick="document.forms[0].submit()"></a>
+      <a class="button" href="#" onclick="document.forms[0].submit()"></a>
+      <label style="margin-top: 5px"  for="twitter">Twitter (Optional)</label>
+      <input id="twitter" type="input" name="twitter" value=""/>
       <input type="submit" style="display: none" /><!-- allows enter to submit form -->
   </div>
 </div>
