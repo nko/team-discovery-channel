@@ -72,13 +72,12 @@ app.configure(function() {
 });
 
 app.configure('development', function() {
-    var env = helpers.loadJSONConfiguration('development');
+    var env = helpers.loadJSONConfiguration('local_env');
     for (var key in env) {
         if (env.hasOwnProperty(key)) {
             process.env[key] = env[key];
         }
     }
-    console.log(process.env);
 });
 
 app.configure('production', function() {
