@@ -77,9 +77,11 @@
         			success: function (data) {
                         if (data.status == 'running') {
                             redirect = true;
+                            $('#test-results-loading').show();
                             setTimeout(checkData, 1000);
                         } else {
                             if (data.content) {
+                              $('#test-results-loading').hide();
                                 var element = $(data.content);
                                 $('#webhook').after(element);
                             }
