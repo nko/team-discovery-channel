@@ -4,11 +4,19 @@
 <% } else { %>
     var id = false;
 <% } %>
+
+$(function() {
+  $('#rerun-test').click(function() {
+    document.forms[0].submit();
+  });
+});
 </script>
 
 <div class="titlebar">
   <div class="container">
-    <div class="cronos"><%= test.url.replace(/^(http)s?:\/+(github\.com\/)?/i, '') %></div><a class="button2" href="#"></a>
+    <div class="cronos"><%= test.url.replace(/^(http)s?:\/+(github\.com\/)?/i, '') %></div>
+    <a class="button2" href="#" id="rerun-test"></a>
+    <form action="/tests/<%=id%>/run" method="POST" style="display:none"></form>
     <p>
       Our hyper intelligent and self-aware cloud servers have analyzed and run your unit tests. Results are below!
     </p>
