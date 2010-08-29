@@ -94,10 +94,10 @@ app.configure('production', function() {
 // App index
 app.get('/', function(req, res) {
     // Again, don't know why the view helper is failing me
-    db.request('/_design/cloudq/_view/tests', function(er, result) {
+    db.request('/_design/cloudq/_view/test_results', function(er, result) {
         res.render('view/index.ejs', {
             locals: {
-                tests: result.rows,
+                test_results: result.rows,
                 url: '', // http://github.com/nko/team-discovery-channel
             }
         });
@@ -155,7 +155,7 @@ function runTests(test_id, url, callback, twitter, gitPayload) {
                 total++;
             }
         }
-        
+
         if (twitter) {
             sandbox.handleBuildTweets(gitPayload, testOutput, twitter);
         }
@@ -165,6 +165,7 @@ function runTests(test_id, url, callback, twitter, gitPayload) {
             date: new Date(),
             total: total,
             passed: passed,
+            url: url,
             type: 'test_result',
             output: testOutput },
             callback
