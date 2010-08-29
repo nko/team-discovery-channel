@@ -69,7 +69,7 @@ db.saveDesign('cloudq', {
         "test_results": {
             map: function(doc) {
                 if (doc.type == 'test_result') {
-                    emit(doc.test_id, doc);
+                    emit([doc.test_id, doc.date], doc);
                 }
             }
         }
@@ -150,7 +150,8 @@ function runTests(test_id, url, callback) {
 // GET a test record
 app.get('/tests/:id', function(req, res) {
     db.getDoc(req.params.id, function(er, test) {
-        db.view('cloudq', 'test_results', {limit: 5, startkey: '"' + req.params.id + '"' }, function(er, testResults) {
+        var endkey = '["' + req.params.id + ',' + (new Date()) + '"]';
+        db.view('cloudq', 'test_results', {limit: 5, endkey: endkey, descending: 'true' }, function(er, testResults) {
             res.render('view/tests/show.ejs', {
                 locals: { id: req.params.id, test: test, error: null, test_results: testResults }
             });
