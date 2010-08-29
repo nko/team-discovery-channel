@@ -22,7 +22,6 @@ a:active, a:focus { outline: none; } /* Disables the dotted outline FireFox puts
 	width: 450px;
 	margin: 0 auto;
 	padding-top: 30px;
-	padding-bottom: 20px;
 }
 
 html {
@@ -191,7 +190,7 @@ input {
   }
 
 
-ws, strike, del {
+ws, strike, del { 
   text-decoration: line-through;
 }
 ins {
@@ -208,6 +207,7 @@ ins {
   text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.5);
   line-height: 18px;
   padding: 20px 0 0 0;
+  padding-bottom: 20px;
 }
 a, a:visited, a:active {
   color: #1f648b;
@@ -275,6 +275,7 @@ a, a:visited, a:active {
   -moz-box-shadow: inset 0px 2px 2px #66a8cf;
   box-shadow: inset 0px 2px 2px #66a8cf;
   behavior: url("ie/PIE.htc");
+  margin-bottom: 20px;
   padding-bottom: 5px;
 }
   .titlebar .container {
@@ -379,13 +380,7 @@ a, a:visited, a:active {
 }
 
 .bling-cloud1 {
-  position: absolute;
-  top: 1000px;
-  left: 100px;
-  background: url('/img/bling-cloud1.png');
-  width: 196px;
-  height: 83px;
-  z-index: 17;
+  background: url('/img/bling-cloud1.png') 100px 1000px no-repeat;
   -webkit-animation-name: cloud1;
   -webkit-animation-duration: 50s;
   -webkit-animation-iteration-count: infinite;
@@ -393,22 +388,14 @@ a, a:visited, a:active {
 }
   @-webkit-keyframes cloud1 {
     0% {
-      left: 100px;
-      top: 1000px;
+      background-position: 100px 1000px;
     }
     100% {
-      left: 200px;
-      top: 900px;
+      background-position: 200px 950px;
     }
   }
 .bling-cloud2 {
-  position: absolute;
-  top: 600px;
-  right: 0px;
-  background: url('/img/bling-cloud2.png');
-  width: 245px;
-  height: 124px;
-  z-index: 16;
+  background: url('/img/bling-cloud2.png') right 600px no-repeat;
   -webkit-animation-name: cloud2;
   -webkit-animation-duration: 30s;
   -webkit-animation-iteration-count: infinite;
@@ -416,9 +403,9 @@ a, a:visited, a:active {
 }
   @-webkit-keyframes cloud2 {
     0% {
-      top: 600px;
+      background-position: right 600px;
     }
     100% {
-      top: 700px;
+      background-position: right 700px;
     }
   }
