@@ -101,7 +101,8 @@ app.get('/', function(req, res) {
 
 // POST a new test record
 app.post('/tests/', function(req, res) {
-    if (req.body.url) {
+    var urlRegex = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+    if (req.body.url && urlRegex.test(req.body.url)) {
 
         var id = crypto.createHash('md5').update(req.body.url).digest('hex');
         db.saveDoc(id, {url: req.body.url, type: 'test', date: new Date() }, function(er, doc) {
