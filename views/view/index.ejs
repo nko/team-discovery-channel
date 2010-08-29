@@ -1,8 +1,10 @@
+<% if (error) { %>
+  <div class="error" id="error"><%= error %></div>
+<% } %>
+
 <div class="outer-box">
   <div class="outer-box-inset">
-    <% if (error) { %>
-      <div class="error" id="error"><%= error %></div>
-    <% } %>
+
   
     <form action="/tests/" method="POST">
     
