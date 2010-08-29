@@ -72,7 +72,7 @@ $(function() {
       <div class="header test-result-toggle">
         <a class="<%= initialState %>" href="#"></a>
         <div class="title"><%= results.pretty_date %></div>
-        <div class="score"><%= results.passed %> / <%= results.total %></div>
+        <div class="score"><%= results.passed * 1 %> / <%= results.total * 1 %></div>
       </div>
     
       <div class="inner-box" style="display:<%= initialDisplay %>">

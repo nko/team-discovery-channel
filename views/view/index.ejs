@@ -36,7 +36,7 @@
             result = test_results[i];
           %>
           <p>
-            <a href="/tests/<%= result.value.test_id %>"><%= result.value.url %></a> (<%= result.value.passed %>/<%= result.value.total %>)
+            <a href="/tests/<%= result.value.test_id %>"><%= result.value.url %></a> (<%= result.value.passed * 1 %>/<%= 0 + result.value.total * 1%>)
           </p>
           <% } %>
         </div>
