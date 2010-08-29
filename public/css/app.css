@@ -268,20 +268,14 @@ a, a:visited, a:active {
 
 /* TITLEBAR */
 .titlebar {
-  background: #75b7de;
+  background: #75b7de url('/img/border.png') left bottom repeat-x;
   border-top: solid 1px #6099ba;
-  border-bottom: solid 1px #6099ba;
   margin-bottom: -30px;
-  -webkit-box-shadow:
-      0px 1px 0px #c4e4f6,
-      inset 0px 2px 2px #66a8cf;
-  -moz-box-shadow:
-      0px 1px 0px #c4e4f6,
-      inset 0px 2px 2px #66a8cf;
-  box-shadow:
-      0px 1px 0px #c4e4f6,
-      inset 0px 2px 2px #66a8cf;
+  -webkit-box-shadow: inset 0px 2px 2px #66a8cf;
+  -moz-box-shadow: inset 0px 2px 2px #66a8cf;
+  box-shadow: inset 0px 2px 2px #66a8cf;
   behavior: url("ie/PIE.htc");
+  padding-bottom: 5px;
 }
   .titlebar .container {
     padding: 18px 0;
@@ -318,3 +312,113 @@ a, a:visited, a:active {
 
 
 
+/* BLING */
+.bling-sun {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background: url('/img/bling-sun.png');
+  width: 83px;
+  height: 83px;
+  z-index: 20;
+}
+.bling-rays1 {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background: url('/img/bling-rays1.png');
+  width: 210px;
+  opacity: 0.5;
+  height: 210px;
+  z-index: 19;
+  -webkit-animation-name: rays1;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+}
+.bling-rays2 {
+  position: absolute;
+  opacity: 0.5;
+  top: 0px;
+  left: 0px;
+  background: url('/img/bling-rays2.png');
+  width: 210px;
+  height: 210px;
+  z-index: 18;
+  -webkit-animation-name: rays2;
+  -webkit-animation-duration: 4s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+}
+
+@-webkit-keyframes rays1 {
+  0% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0.9;
+  }
+}
+
+@-webkit-keyframes rays2 {
+  0% {
+    opacity: 0.5;
+  }
+  25% {
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  75% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+
+.bling-cloud1 {
+  position: absolute;
+  top: 1000px;
+  left: 100px;
+  background: url('/img/bling-cloud1.png');
+  width: 196px;
+  height: 83px;
+  z-index: 17;
+  -webkit-animation-name: cloud1;
+  -webkit-animation-duration: 50s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+}
+  @-webkit-keyframes cloud1 {
+    0% {
+      left: 100px;
+      top: 1000px;
+    }
+    100% {
+      left: 200px;
+      top: 900px;
+    }
+  }
+.bling-cloud2 {
+  position: absolute;
+  top: 600px;
+  right: 0px;
+  background: url('/img/bling-cloud2.png');
+  width: 245px;
+  height: 124px;
+  z-index: 16;
+  -webkit-animation-name: cloud2;
+  -webkit-animation-duration: 30s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+}
+  @-webkit-keyframes cloud2 {
+    0% {
+      top: 600px;
+    }
+    100% {
+      top: 700px;
+    }
+  }

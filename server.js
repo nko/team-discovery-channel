@@ -47,7 +47,6 @@ app.configure('development', function() {
         }
     }
 });
-
 var db = couchdb
     .createClient(5984, 'shodan.couchone.com', process.env.COUCH_USER, process.env.COUCH_PASSWORD)
     .db(process.env.COUCH_DB);
@@ -189,7 +188,7 @@ app.get('/tests/:id', function(req, res) {
         // to like these queries
 
         // HACK: Sort keys by [test_id, start of unix datetime] to [test_id, current time]
-        var startkey = '["' + req.params.id + '","' + ISODateString(new Date()) + '"]';
+        var startkey = '["' + req.params.id + '","2020-12-31T24:59:59Z"]';
         var endkey = '["' + req.params.id + '","' + ISODateString(new Date(0)) + '"]';
         var url = '/_design/cloudq/_view/test_results?startkey=' + encodeURIComponent(startkey) + '&endkey=' + encodeURIComponent(endkey) + '&descending=true&limit=5';
         db.request(url, function(er, testResults) {
