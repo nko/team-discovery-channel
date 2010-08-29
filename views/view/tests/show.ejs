@@ -62,9 +62,9 @@
             <% for (var j = 0, assertion; (assertion = test.tests[j]) != null; j++) { %>
 
                 <% if (assertion.result) { %>
-                    <li class="passed"><%= assertion.message %></li>
+                    <li class="passed"><%= j + 1 %>. <%= assertion.message %></li>
                 <% } else { %>
-                    <li class="failed"><%= assertion.message %></li>
+                    <li class="failed"><%= j + 1 %>. <%= assertion.message %></li>
                 <% } %>
 
             <% } %>
