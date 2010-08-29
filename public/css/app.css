@@ -141,12 +141,18 @@ input {
     color: #474747;
     cursor: default;
   }
-  .tests .passed {
+  .score.passed {
+      color:green;
+  }
+  .score.failed {
+      color:red;
+  }
+  .tests li.passed {
     background: #f3ffd2;
     color: #6e803c;
     padding: 5px;
   }
-  .tests .failed {
+  .tests li.failed {
     background: #ffe9e9;
     color: #803d3d;
     padding: 5px;
