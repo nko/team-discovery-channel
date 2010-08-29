@@ -27,6 +27,19 @@
           $(this).siblings('.inner-box').toggle();
           return false;
         });
+        
+        $('#web-hook-toggle').bind('click', function() {
+            $('#webhook').toggle();
+            return false;
+        });
+        
+        $('#create-github-link').bind('click', function() {
+            if ($('#twitter-handle').val() > '') {
+                var hook = 'http://nko-team-discovery-channel.heroku.com/hooks/github/' + $('#twitter-handle').val();
+                $('#hook').val(hook);
+            }
+            return false;
+        });
       });
     </script>
   </body>
