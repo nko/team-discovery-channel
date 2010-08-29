@@ -28,3 +28,23 @@
     
   </div>
 </div>
+
+
+<div class="outer-box">
+  <div class="outer-box-inset">
+    <div class="header test-result-toggle">
+      <a class="toggle-open" href="#"></a>
+      <div class="title">Recently Added</div>
+    </div>
+    
+    <div class="inner-box" style="display:none">
+      <div class="inner-box-inset">
+        <% for (var i = 0; i < tests.length; i++) { %>
+        <p>
+          <a href="/tests/<%= tests[i].id %>"><%= tests[i].value.url %></a>
+        </p>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>

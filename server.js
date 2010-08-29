@@ -61,7 +61,7 @@ db.saveDesign('cloudq', {
         "tests": {
             map: function(doc) {
                 if (doc.type == 'test') {
-                    emit(doc.id, doc);
+                    emit(doc.date, doc);
                 }
             }
         },
@@ -87,11 +87,15 @@ app.configure('production', function() {
 
 // App index
 app.get('/', function(req, res) {
-    res.render('view/index.ejs', {
-        locals: {
-            error: null,
-            foo: 'Hello World'
-        }
+    // Again, don't know why the view helper is failing me
+    db.request('/_design/cloudq/_view/tests', function(er, result) {
+        res.render('view/index.ejs', {
+            locals: {
+                error: null,
+                foo: 'Hello World',
+                tests: result.rows
+            }
+        });
     });
 });
 
@@ -100,7 +104,7 @@ app.post('/tests/', function(req, res) {
     if (req.body.url) {
 
         var id = crypto.createHash('md5').update(req.body.url).digest('hex');
-        db.saveDoc(id, {url: req.body.url, type: 'test'}, function(er, doc) {
+        db.saveDoc(id, {url: req.body.url, type: 'test', date: new Date() }, function(er, doc) {
 
             // Asynchronously run tests
             runTests(id, req.body.url);
