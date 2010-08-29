@@ -122,7 +122,7 @@ app.post('/tests/', function(req, res) {
     }
 });
 
-function runTests(test_id, url, callback) {
+function runTests(test_id, url, callback, twitter, gitPayload) {
     if (!url) {
         return;
     }
@@ -149,6 +149,10 @@ function runTests(test_id, url, callback) {
                 passed += tests[j].result;
                 total++;
             }
+        }
+        
+        if (twitter) {
+            sandbox.handleBuildTweets(gitPayload, testOutput, twitter);
         }
 
         db.saveDoc({
@@ -216,34 +220,16 @@ app.post('/hooks/github/:twitter', function(req, res) {
     try {
         var gitPayload = JSON.parse(req.body.payload);
         var url = gitPayload.repository.url;
+        
+        var urlRegex = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+        if (url && urlRegex.test(url)) {
 
-        if (url) {
-
-            var scriptRunner = new sandbox.Sandbox({
-                timeout: 10000,
-                url: url
-            });
-
-            // http://github.com/nko/team-discovery-channel.
-            scriptRunner.run(sandbox, function(output) {
-
-                var error = '';
-
-               var testOutput = [];
-                try {
-                    var testOutput = JSON.parse(output);
-                } catch (e) {
-                    error = 'Failed running tests.';
-                }
-
-                sandbox.handleBuildTweets(gitPayload, testOutput, req.params.twitter);
-
-                res.render('view/index.ejs', {
-                    locals: {
-                        error: null,
-                        foo: 'Hello World'
-                    }
-                });
+            var id = crypto.createHash('md5').update(req.body.url).digest('hex');
+            db.saveDoc(id, {url: req.body.url, type: 'test', date: new Date() }, function(er, doc) {
+                
+                runTests(id, req.body.url, req.params.twitter, gitPayload);
+                res.redirect( '/tests/' + id );
+                
             });
         }
     } catch (e) {
