@@ -274,7 +274,7 @@ a, a:visited, a:active {
   -moz-box-shadow: inset 0px 2px 2px #66a8cf;
   box-shadow: inset 0px 2px 2px #66a8cf;
   behavior: url("ie/PIE.htc");
-  margin-bottom: 20px;
+  margin-top: 20px;
   padding-bottom: 5px;
 }
   .titlebar .container {
