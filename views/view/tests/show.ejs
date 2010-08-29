@@ -4,11 +4,20 @@
 <% } else { %>
     var id = false;
 <% } %>
+
+// Hacky "re run this test" click action
+$(function() {
+  $('#rerun-test').click(function() {
+    document.forms[0].submit();
+  });
+});
 </script>
 
 <div class="titlebar">
   <div class="container">
-    <div class="cronos"><%= test.url %></div><a class="button2" href="#"></a>
+    <div class="cronos"><%= pretty_url %></div>
+    <a class="button2" href="#" id="rerun-test"></a>
+    <form action="/tests/<%=id%>/run" method="POST" style="display:none"></form>
     <p>
       Our hyper intelligent and self-aware cloud servers have analyzed and run your unit tests. Results are below!
     </p>
@@ -24,9 +33,24 @@
           <a class="button" href="#" id="create-github-link"></a>
       
         <div id="hook-reveal" style="display:none">
-          <label style="margin-top: 5px" for="hook">GitHub Hook</label>
-          <input id="hook" type="input" name="hook" value=""/>
+          <label style="margin-top: 5px" for="hook">Post-Commit Hook URL</label>
+          <input id="hook" type="input" name="hook" value="" class="nobutton"/>
         </div>
+    </div>
+  </div>
+
+
+  <!-- BEN COE LOOK HERE -->
+  <div class="outer-box" id="test-results-loading" style="display:none">
+    <div class="outer-box-inset">
+      <div class="header test-result-toggle">
+        <div class="title">Waiting For Test Results</div>
+      </div>
+      <div class="inner-box">
+        <div class="inner-box-inset">
+          <center><img style="vertical-align: middle" src="/img//loader.gif" width="32" height="32"   alt=""></center>
+        </div>
+      </div>
     </div>
   </div>
 
