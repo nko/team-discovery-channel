@@ -184,13 +184,13 @@ app.get('/tests/:test_id/results/:id', function(req, res) {
 });
 
 app.post('/hooks/github/:twitter', function(req, res) {
-    
+        
     try {
         var gitPayload = JSON.parse(req.body.payload);
-
         var url = gitPayload.repository.url;
         
         if (url) {
+            
             var scriptRunner = new sandbox.Sandbox({
                 timeout: 10000,
                 url: url
