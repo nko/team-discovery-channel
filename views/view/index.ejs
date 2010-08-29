@@ -6,7 +6,7 @@
       <input type="submit" style="display: none" /><!-- allows enter to submit form -->
       <input id="test-url" type="input" name="url" value="<%= url %>" placeholder="http://github.com/username/repo"/>
       <a class="button" href="#" onclick="document.forms[0].submit()"></a>
-      <% if (error) { %>
+      <% if (locals.error) { %>
         <div class="error" id="error"><%= error %></div>
       <% } %>
 
@@ -20,21 +20,26 @@
   </div>
 </div>
 
+<% if (locals.test_results && test_results.length) { %>
 <div class="outer-box">
   <div class="outer-box-inset">
     <div class="header test-result-toggle">
       <a class="toggle-open" href="#"></a>
-      <div class="title">Recently Added</div>
+      <div class="title">Recent Tests</div>
     </div>
 
     <div class="inner-box" style="display:none">
       <div class="inner-box-inset">
-        <% for (var i = 0; i < tests.length; i++) { %>
+        <%
+        for (var i = 0, result; i < test_results.length; i++) {
+          result = test_results[i];
+        %>
         <p>
-          <a href="/tests/<%= tests[i].id %>"><%= tests[i].value.url %></a>
+          <a href="/tests/<%= result.id %>"><%= result.value.url %></a> (<%= result.value.passed %>/<%= result.value.total %>)
         </p>
         <% } %>
       </div>
     </div>
   </div>
 </div>
+<% } %>
