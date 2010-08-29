@@ -1,4 +1,4 @@
- /**
+/**
  * Team Discovery Channel 2010
  *
  * Our contest entry for the 2010 Knode-Knock-Out competition. We're
@@ -74,7 +74,7 @@ db.saveDesign('cloudq', {
             }
         }
     }}, function(er, doc) {
-        if (er.error != 'conflict') {
+        if (er && er.error != 'conflict') {
             // Conflicts are OK, for now (see above)
             throw new Error(JSON.stringify(er));
         }
@@ -102,10 +102,9 @@ app.post('/tests/', function(req, res) {
         var id = crypto.createHash('md5').update(req.body.url).digest('hex');
         db.saveDoc(id, {url: req.body.url, type: 'test'}, function(er, doc) {
 
-            runTests(id, req.body.url, function() {
-                res.redirect( '/tests/' + id );
-            });
-            
+            // Asynchronously run tests
+            runTests(id, req.body.url);
+            res.redirect( '/tests/' + id );
         });
     } else {
         res.render('view/index.ejs', {
@@ -136,10 +135,20 @@ function runTests(test_id, url, callback) {
         } catch (e) {
             error = 'Failed running tests.'
         }
+        var total = 0, passed = 0;
+        for (var i = 0; i < testOutput.length; i++) {
+            tests = testOutput[i].tests;
+            for (var j = 0; j < tests.length; j++) {
+                passed += tests[j].result;
+                total++;
+            }
+        }
 
         db.saveDoc({
             test_id: test_id,
             date: new Date(),
+            total: total,
+            passed: passed,
             type: 'test_result',
             output: testOutput },
             callback
@@ -150,6 +159,7 @@ function runTests(test_id, url, callback) {
 // GET a test record
 app.get('/tests/:id', function(req, res) {
     db.getDoc(req.params.id, function(er, test) {
+        // For some reason couch needs things these quote characters here
         var endkey = '["' + req.params.id + ',' + (new Date()) + '"]';
         db.view('cloudq', 'test_results', {limit: 5, endkey: endkey, descending: 'true', test_id: req.params.id }, function(er, testResults) {
             res.render('view/tests/show.ejs', {
