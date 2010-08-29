@@ -161,7 +161,7 @@ app.get('/tests/:id', function(req, res) {
     db.getDoc(req.params.id, function(er, test) {
         // For some reason couch needs things these quote characters here
         var endkey = '["' + req.params.id + ',' + (new Date()) + '"]';
-        db.view('cloudq', 'test_results', {limit: 5, endkey: endkey, descending: 'true' }, function(er, testResults) {
+        db.view('cloudq', 'tests/test_id', {limit: 5, endkey: endkey, descending: 'true', key: req.params.id }, function(er, testResults) {
             res.render('view/tests/show.ejs', {
                 locals: { id: req.params.id, test: test, error: null, test_results: testResults }
             });
