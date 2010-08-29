@@ -1,4 +1,4 @@
-/**
+    /**
  * Team Discovery Channel 2010
  *
  * Our contest entry for the 2010 Knode-Knock-Out competition. We're
@@ -72,6 +72,13 @@ db.getDoc('_design/cloudq', function(er, doc) {
                     emit([doc.test_id, doc.date], doc);
                 }
             }
+        },
+        "test_results_by_date": {
+            map: function(doc) {
+                if (doc.type == 'test_result') {
+                    emit(doc.date, doc);
+                }
+            }
         }
     }};
 
@@ -100,8 +107,8 @@ app.configure('production', function() {
 
 // App index
 app.get('/', function(req, res) {
-    // Again, don't know why the view helper is failing me
-    db.request('/_design/cloudq/_view/test_results?descending=true&limit=10', function(er, result) {
+    var url = '/_design/cloudq/_view/test_results_by_date?descending=true&limit=10';
+    db.request(url, function(er, result) {
         res.render('view/index.ejs', {
             locals: {
                 test_results: result.rows,
