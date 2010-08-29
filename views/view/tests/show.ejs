@@ -1,3 +1,11 @@
+<script type="text/javascript">
+<% if (id) { %>
+    var id = "<%= id %>";
+<% } else { %>
+    var id = false;
+<% } %>
+</script>
+
 <div class="titlebar">
   <div class="container">
     <div class="cronos"><%= test.url %></div><a class="button2" href="#"></a>

@@ -14,7 +14,7 @@
         textShadow: '-1px -1px 0px #5799bf',
         color: '-linear-gradient(#ffffff, 0.6#ffffff, #eff9ff)'
       });
-     
+      var id = ''; // Needed.
     </script>
   </head>
   <body>
@@ -64,6 +64,31 @@
             }
             return false;
         });
+        
+        // Check whether tests are currently running.
+        if (id > '') {
+            var redirect = false;
+            (function checkData() {
+                
+        		$.ajax({
+        			url: '/tests/running/' + id ,
+        			data: {},
+        			dataType: 'json',
+        			success: function (data) {
+                        if (data.status == 'running') {
+                            redirect = true;
+                            setTimeout(checkData, 1000);
+                        } else {
+                            if (redirect == true) {
+                                document.location = '/tests/' + id;
+                            }
+                        }
+        			}
+        			
+        		});
+        		
+        	})();
+	    }
 
         // Fix cloud clipping issue
         $('.bling-cloud2').attr('style', 'min-height:' + $('body').height() + 'px');

@@ -104,6 +104,7 @@ app.get('/', function(req, res) {
 });
 
 // POST a new test record
+var testStates = {};
 app.post('/tests/', function(req, res) {
     var urlRegex = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
     if (req.body.url && urlRegex.test(req.body.url)) {
@@ -112,7 +113,11 @@ app.post('/tests/', function(req, res) {
         db.saveDoc(id, {url: req.body.url, type: 'test', date: new Date() }, function(er, doc) {
 
             // Asynchronously run tests
-            runTests(id, req.body.url);
+            testStates[id] = "running";
+            runTests(id, req.body.url, function() {
+                testStates[id] = "complete";
+            });
+            
             res.redirect( '/tests/' + id );
         });
     } else {
@@ -123,6 +128,18 @@ app.post('/tests/', function(req, res) {
                 tests: [] // NEED TO FIX THIS
             }
         });
+    }
+});
+
+/**
+ * Check whether tests are currently running for a given
+ * id.
+ */
+app.get('/tests/running/:id', function(req, res) {
+    if (testStates[req.params.id]) {
+        res.send(JSON.stringify({status: testStates[req.params.id]}));
+    } else {
+        res.send(JSON.stringify({status: 'unknown'}))
     }
 });
 
