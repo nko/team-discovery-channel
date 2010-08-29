@@ -25,7 +25,6 @@
     <!-- clouds need to wrap container -->
     <div class="bling-cloud1">
       <div class="bling-cloud2">
-
         <div class="container">
           <a href="/"><img src="/img/logo.png" width="450" height="203" alt="CloudQ: Run Qunit tests in the cloud!"></a>
         </div>
@@ -65,6 +64,9 @@
             }
             return false;
         });
+
+        // Fix cloud clipping issue
+        $('.bling-cloud2').attr('style', 'min-height:' + $('body').height() + 'px');
       });
     </script>
   </body>
