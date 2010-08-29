@@ -71,6 +71,20 @@ app.configure(function() {
     app.use(express.staticProvider(__dirname + '/public'));
 });
 
+app.configure('development', function() {
+    var env = helpers.loadJSONConfiguration('development');
+    for (var key in env) {
+        if (env.hasOwnProperty(key)) {
+            process.env[key] = env[key];
+        }
+    }
+    console.log(process.env);
+});
+
+app.configure('production', function() {
+    // TODO?
+});
+
 // App index
 app.get('/', function(req, res) {
     res.render('view/index.ejs', {
