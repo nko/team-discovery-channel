@@ -408,3 +408,8 @@ a, a:visited, a:active {
       background-position: right 700px;
     }
   }
+
+input.nobutton {
+  width: 394px;
+  padding: 10px;
+}
