@@ -227,7 +227,7 @@ app.post('/hooks/github/:twitter', function(req, res) {
             var id = crypto.createHash('md5').update(url).digest('hex');
             db.saveDoc(id, {url: url, type: 'test', date: new Date() }, function(er, doc) {
                 
-                runTests(id, url, req.params.twitter, gitPayload);
+                runTests(id, url, function() {}, req.params.twitter, gitPayload);
                 res.redirect( '/tests/' + id );
                 
             });
