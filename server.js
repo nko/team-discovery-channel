@@ -207,6 +207,10 @@ app.post('/run-tests-twitter', function(req, res) {
         var gitPayload = JSON.req.body.payload;
 
         var url = gitPayload.repository.url;
+        
+        sys.puts(JSON.req.body.payload);
+        sys.puts(url);
+        
 
         if (url) {
             var scriptRunner = new sandbox.Sandbox({
@@ -216,6 +220,9 @@ app.post('/run-tests-twitter', function(req, res) {
 
             // http://github.com/nko/team-discovery-channel.
             scriptRunner.run(sandbox, function(output) {
+                
+                sys.puts(output);
+                
                 var error = '';
 
                var testOutput = [];
