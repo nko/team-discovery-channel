@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
   <head>
-    <title>CloudQ</title>
+    <title>CloudQ - <%= locals.page_title || 'Run QUnit tests in the cloud!' %></title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
     <link rel="stylesheet" href="/css/app.css" type="text/css" media="screen" title="no title" charset="utf-8">
@@ -26,7 +26,7 @@
     <div class="bling-cloud1">
       <div class="bling-cloud2">
         <div class="container">
-          <a href="/"><img src="/img/logo.png" width="450" height="203" alt="CloudQ: Run Qunit tests in the cloud!"></a>
+          <a href="/"><img src="/img/logo.png" title="CloudQ: Run QUnit tests in the cloud!" width="450" height="203"></a>
         </div>
 
           <%- body %>

@@ -123,7 +123,7 @@ app.post('/tests/', function(req, res) {
             runTests(id, req.body.url, function() {
                 testStates[id] = "complete";
             });
-            
+
             res.redirect( '/tests/' + id );
         });
     } else {
@@ -199,12 +199,12 @@ function runTests(test_id, url, callback, twitter, gitPayload) {
  * Javascript Humane Dates
  * Copyright (c) 2008 Dean Landolt (deanlandolt.com)
  * Re-write by Zach Leatherman (zachleat.com)
- * 
+ *
  * Adopted from the John Resig's pretty.js
  * at http://ejohn.org/blog/javascript-pretty-date
- * and henrah's proposed modification 
+ * and henrah's proposed modification
  * at http://ejohn.org/blog/javascript-pretty-date/#comment-297458
- * 
+ *
  * Licensed under the MIT license.
  */
 // http://www.zachleat.com/Lib/jquery/humane.js
@@ -265,6 +265,10 @@ function ISODateString(d){
       + pad(d.getUTCMinutes())+':'
       + pad(d.getUTCSeconds())+'Z'}
 
+function prettyUrl(url) {
+    return (url || '').replace(/^(http)s?:\/+(github\.com\/)?/i, '');
+}
+
 // GET a test record
 app.get('/tests/:id', function(req, res) {
     db.getDoc(req.params.id, function(er, test) {
@@ -284,7 +288,13 @@ app.get('/tests/:id', function(req, res) {
                 result.pretty_date = prettyDate(result.date);
             }
             res.render('view/tests/show.ejs', {
-                locals: { id: req.params.id, test: test, test_results: testResults },
+                locals: {
+                    id: req.params.id,
+                    test: test,
+                    test_results: testResults,
+                    page_title: prettyUrl(test.url),
+                    pretty_url: prettyUrl(test.url)
+                },
                 filters: { pretty: prettyDate }
             });
 
@@ -317,16 +327,16 @@ app.post('/hooks/github/:twitter', function(req, res) {
     try {
         var gitPayload = JSON.parse(req.body.payload);
         var url = gitPayload.repository.url;
-        
+
         var urlRegex = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
         if (url && urlRegex.test(url)) {
 
             var id = crypto.createHash('md5').update(url).digest('hex');
             db.saveDoc(id, {url: url, type: 'test', date: new Date() }, function(er, doc) {
-                
+
                 runTests(id, url, function() {}, req.params.twitter, gitPayload);
                 res.redirect( '/tests/' + id );
-                
+
             });
         }
     } catch (e) {

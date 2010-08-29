@@ -5,6 +5,7 @@
     var id = false;
 <% } %>
 
+// Hacky "re run this test" click action
 $(function() {
   $('#rerun-test').click(function() {
     document.forms[0].submit();
@@ -14,7 +15,7 @@ $(function() {
 
 <div class="titlebar">
   <div class="container">
-    <div class="cronos"><%= test.url.replace(/^(http)s?:\/+(github\.com\/)?/i, '') %></div>
+    <div class="cronos"><%= pretty_url %></div>
     <a class="button2" href="#" id="rerun-test"></a>
     <form action="/tests/<%=id%>/run" method="POST" style="display:none"></form>
     <p>
