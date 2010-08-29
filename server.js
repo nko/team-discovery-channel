@@ -224,10 +224,10 @@ app.post('/hooks/github/:twitter', function(req, res) {
         var urlRegex = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
         if (url && urlRegex.test(url)) {
 
-            var id = crypto.createHash('md5').update(req.body.url).digest('hex');
-            db.saveDoc(id, {url: req.body.url, type: 'test', date: new Date() }, function(er, doc) {
+            var id = crypto.createHash('md5').update(url).digest('hex');
+            db.saveDoc(id, {url: url, type: 'test', date: new Date() }, function(er, doc) {
                 
-                runTests(id, req.body.url, req.params.twitter, gitPayload);
+                runTests(id, url, req.params.twitter, gitPayload);
                 res.redirect( '/tests/' + id );
                 
             });
