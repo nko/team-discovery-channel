@@ -106,6 +106,7 @@ app.post('/tests/', function(req, res) {
                 // because we hash url to receive id, the url couldn't have changed
                 throw new Error(JSON.stringify(er));
             }
+                        
             runTests(id, req.body.url, function() {
                 res.redirect( '/tests/' + id );
             });
@@ -154,6 +155,7 @@ function runTests(test_id, url, callback) {
 app.get('/tests/:id', function(req, res) {
     db.getDoc(req.params.id, function(er, test) {        
         db.view('cloudq', 'test_results', {limit: 5, startkey: '"' + test.id + '"' }, function(er, testResults) {
+            sys.puts("" + JSON.stringify(testResults.rows.length));
             
             res.render('view/tests/show.ejs', {
                 locals: { id: req.params.id, test: test, error: null, test_results: testResults }
