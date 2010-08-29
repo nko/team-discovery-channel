@@ -179,11 +179,14 @@ function runTests(test_id, url, callback, twitter, gitPayload) {
         } catch (e) {
             error = 'Failed running tests.'
         }
-        var total = 0, passed = 0;
+        var total = 0, passed = 0, result;
         for (var i = 0; i < testOutput.length; i++) {
             tests = testOutput[i].tests;
             for (var j = 0; j < tests.length; j++) {
-                passed += tests[j].result;
+                result = tests[j].result;
+                if (result && result != 'false') {
+                    passed++;
+                }
                 total++;
             }
         }
