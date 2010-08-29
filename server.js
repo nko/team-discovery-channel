@@ -10,6 +10,7 @@ require.paths.unshift('lib/discovery');
 var sys = require('sys');
 var helpers = require('helpers');
 var crypto = require('crypto');
+var fs = require('fs');
 
 // Load in paths that should be search when running
 // require. Makes our lives easier when dealing with 3rd
@@ -21,6 +22,7 @@ for ( var i = 0, path; ( path = paths[i] ) != null; i++ ) {
 }
 
 var express = require('express');
+var ejs = require('ejs');
 var sandbox = require('sandbox');
 
 // NPM Bundle
@@ -119,9 +121,21 @@ app.post('/tests/', function(req, res) {
         db.saveDoc(id, {url: req.body.url, type: 'test', date: new Date() }, function(er, doc) {
 
             // Asynchronously run tests
-            testStates[id] = "running";
-            runTests(id, req.body.url, function() {
-                testStates[id] = "complete";
+            testStates[id] = {};
+            testStates[id].status = "running";
+            runTests(id, req.body.url, function( data ) {
+                try {
+                    var body = fs.readFileSync("views/_test-result.ejs");
+                    var content = ejs.render(body, {
+                        locals: {
+                            results: data
+                        }
+                    })
+                    testStates[id].content = content;
+                    testStates[id].status = "complete";
+                } catch (e) {
+                    sys.puts(e);
+                }
             });
             
             res.redirect( '/tests/' + id );
@@ -143,7 +157,7 @@ app.post('/tests/', function(req, res) {
  */
 app.get('/tests/running/:id', function(req, res) {
     if (testStates[req.params.id]) {
-        res.send(JSON.stringify({status: testStates[req.params.id]}));
+        res.send(JSON.stringify(testStates[req.params.id]));
     } else {
         res.send(JSON.stringify({status: 'unknown'}))
     }
@@ -190,7 +204,16 @@ function runTests(test_id, url, callback, twitter, gitPayload) {
             url: url,
             type: 'test_result',
             output: testOutput },
-            callback
+            
+            callback ({
+                test_id: test_id,
+                date: new Date(),
+                total: total,
+                passed: passed,
+                url: url,
+                type: 'test_result',
+                output: testOutput
+            })
         );
     });
 }

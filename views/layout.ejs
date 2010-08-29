@@ -79,8 +79,9 @@
                             redirect = true;
                             setTimeout(checkData, 1000);
                         } else {
-                            if (redirect == true) {
-                                document.location = '/tests/' + id;
+                            if (data.content) {
+                                var element = $(data.content);
+                                $('#webhook').after(element);
                             }
                         }
         			}
