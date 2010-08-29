@@ -105,6 +105,7 @@ app.post('/tests/', function(req, res) {
                 // because we hash url to receive id, the url couldn't have changed
                 throw new Error(JSON.stringify(er));
             }
+            runTests(id, req.body.url);
             res.redirect('/tests/' + id);
         });
     } else {
@@ -115,6 +116,37 @@ app.post('/tests/', function(req, res) {
         });
     }
 });
+
+function runTests(test_id, url, callback) {
+    if (!url) {
+        return;
+    }
+
+    var scriptRunner = new sandbox.Sandbox({
+        timeout: 10000,
+        url: url
+    });
+
+    // http://github.com/nko/team-discovery-channel.
+    scriptRunner.run(sandbox, function(output) {
+        var error = '';
+
+       var testOutput = [];
+        try {
+            var testOutput = JSON.parse(output);
+        } catch (e) {
+            error = 'Failed running tests.'
+        }
+
+        db.saveDoc({
+            test_id: test_id,
+            date: new Date(),
+            type: 'test_result',
+            output: testOutput },
+            callback
+        );
+    });
+}
 
 // GET a test record
 app.get('/tests/:id', function(req, res) {
@@ -128,34 +160,9 @@ app.get('/tests/:id', function(req, res) {
 // Execute test runner, then redirect to results (stored in DB)
 app.post('/tests/:id/run', function(req, res) {
     db.getDoc(req.params.id, function(er, doc) {
-        if (doc.url) {
-            var scriptRunner = new sandbox.Sandbox({
-                timeout: 10000,
-                url: doc.url
-            });
-
-            // http://github.com/nko/team-discovery-channel.
-            scriptRunner.run(sandbox, function(output) {
-                var error = '';
-
-               var testOutput = [];
-                try {
-                    var testOutput = JSON.parse(output);
-                } catch (e) {
-                    error = 'Failed running tests.'
-                }
-
-                db.saveDoc({
-                    test_id: req.params.id,
-                    date: new Date(),
-                    type: 'test_result',
-                    output: testOutput },
-                    function(er, doc) {
-                        res.redirect('/tests/' + req.params.id + '/results/' + doc.id);
-                    }
-                );
-            });
-        }
+        runTests(doc.id, doc.url, function(er, testResults) {
+            res.redirect('/tests/' + req.params.id + '/results/' + testResults.id);
+        });
     });
 });
 
