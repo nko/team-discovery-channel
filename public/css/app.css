@@ -377,3 +377,48 @@ a, a:visited, a:active {
     opacity: 0.5;
   }
 }
+
+.bling-cloud1 {
+  position: absolute;
+  top: 1000px;
+  left: 100px;
+  background: url('/img/bling-cloud1.png');
+  width: 196px;
+  height: 83px;
+  z-index: 17;
+  -webkit-animation-name: cloud1;
+  -webkit-animation-duration: 50s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+}
+  @-webkit-keyframes cloud1 {
+    0% {
+      left: 100px;
+      top: 1000px;
+    }
+    100% {
+      left: 200px;
+      top: 900px;
+    }
+  }
+.bling-cloud2 {
+  position: absolute;
+  top: 600px;
+  right: 0px;
+  background: url('/img/bling-cloud2.png');
+  width: 245px;
+  height: 124px;
+  z-index: 16;
+  -webkit-animation-name: cloud2;
+  -webkit-animation-duration: 30s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+}
+  @-webkit-keyframes cloud2 {
+    0% {
+      top: 600px;
+    }
+    100% {
+      top: 700px;
+    }
+  }
