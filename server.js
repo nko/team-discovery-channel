@@ -99,7 +99,7 @@ app.configure('production', function() {
 // App index
 app.get('/', function(req, res) {
     // Again, don't know why the view helper is failing me
-    db.request('/_design/cloudq/_view/test_results', function(er, result) {
+    db.request('/_design/cloudq/_view/test_results?descending=true&limit=10', function(er, result) {
         res.render('view/index.ejs', {
             locals: {
                 test_results: result.rows,
