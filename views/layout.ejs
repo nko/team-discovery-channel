@@ -43,7 +43,7 @@
 
     <script>
       $(function() {
-        $('.test-result-toggle').click(function() {
+        $('.test-result-toggle').live('click', function() {
 
           var innerBox = $(this).siblings('.inner-box').toggle();
           var toggleLink = $(this).find('a').toggleClass('toggle-close').toggleClass('toggle-open');
