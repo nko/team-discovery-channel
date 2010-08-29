@@ -34,7 +34,7 @@
         });
         
         $('#create-github-link').bind('click', function() {
-            if (url && $('#twitter-handle').val() > '') {
+            if ($('#twitter-handle').val() > '') {
                 var hook = 'http://nko-team-discovery-channel.heroku.com/hooks/github/' + $('#twitter-handle').val();
                 $('#hook').val(hook);
             }
