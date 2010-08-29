@@ -20,7 +20,7 @@ a:active, a:focus { outline: none; } /* Disables the dotted outline FireFox puts
 /* CONTAINER */
 .container {
 	width: 450px;
-	margin: 0 auto;	
+	margin: 0 auto;
 	padding-top: 40px;
 	padding-bottom: 20px;
 }
@@ -51,15 +51,15 @@ body {
   -webkit-box-shadow: 1px 1px 0px rgba(255, 255, 255, 0.45);
   -moz-box-shadow: 1px 1px 0px rgba(255, 255, 255, 0.45);
   box-shadow: 1px 1px 0px rgba(255, 255, 255, 0.45);
-}
+  }
   .outer-box-inset {
-    padding: 18px;
+    padding: 14px 18px 18px 18px;
     -webkit-box-shadow: inset 1px 1px 3px #5b9dc3;
     -moz-box-shadow: inset 1px 1px 3px #5b9dc3;
     box-shadow: inset 1px 1px 3px #5b9dc3;
     position: relative;
   }
-  
+
 /* INNER BOX */
 .inner-box {
   background: #ffffff;
@@ -71,8 +71,9 @@ body {
   -webkit-box-shadow: 1px 1px 0px rgba(255, 255, 255, 0.45);
   -moz-box-shadow: 1px 1px 0px rgba(255, 255, 255, 0.45);
   box-shadow: 1px 1px 0px rgba(255, 255, 255, 0.45);
-  
+
   color: #474747;
+  margin-top: 4px;
 }
   .inner-box-inset {
     padding: 10px;
@@ -80,23 +81,24 @@ body {
     -moz-box-shadow: inset 1px 1px 3px #b7d6e8;
     box-shadow: inset 1px 1px 3px #b7d6e8;
   }
-  
-  
-/* FORMS */  
+
+
+/* FORMS */
 label {
   display: block;
   font-size: 16px;
   font-weight: bold;
-  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.2);
+  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.4);
   margin-bottom: 4px;
-}  
-  
+  padding-top: 4px;
+}
+
 input {
   width: 324px;
   margin-right: 20px;
   outline: none;
   border: none;
-  background: url("/img/input.png") no-repeat;
+  background: url("images/input.png") no-repeat;
   height: 25px;
   font-size: 16px;
   font-family: Helvetica, Arial, Tahoma, sans-serif;
@@ -107,34 +109,37 @@ input {
   display: block;
   height: 32px;
   width: 65px;
-  background: url("/img/button.png") no-repeat;
+  background: url("images/button.png") no-repeat;
   position: absolute;
   top: 50px;
   right: 22px;
-}  
+}
   .button:hover {
-    background: url("/img/button.png") 0px -32px no-repeat;
+    background: url("images/button.png") 0px -32px no-repeat;
   }
   .button:active {
-    background: url("/img/button.png") 0px -64px no-repeat;
+    background: url("images/button.png") 0px -64px no-repeat;
   }
-  
-  
-  
+
+
+
 /* TESTS */
 .tests {
   list-style: none;
   font-size: 12px;
   line-height: 18px;
   margin: -5px;
-}  
+}
   .tests li {
     margin: 5px 0px;
   }
-  .tests .header {
+  .tests .header,
+  .tests .header:hover {
     font-weight: bold;
     margin-top: 9px;
     padding: 5px;
+    color: #474747;
+    cursor: default;
   }
   .tests .passed {
     background: #f3ffd2;
@@ -146,21 +151,21 @@ input {
     color: #803d3d;
     padding: 5px;
   }
-  
-  
-  ws, strike, del {
-    text-decoration: line-through;
-  }
-  ins {
-    background-color: #ffff6e;
-    text-decoration: none;
-  }
-  
-  
-  
+
+
+ws, strike, del {
+  text-decoration: line-through;
+}
+ins {
+  background-color: #ffff6e;
+  text-decoration: none;
+}
+
+
+
 /* FOOTER */
 .footer {
-  font-size: 12px; 
+  font-size: 12px;
   color: #1f648b;
   text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.5);
   line-height: 18px;
@@ -171,4 +176,50 @@ a, a:visited, a:active {
 }
   a:hover {
     color: #0f415d;
+  }
+
+
+/* HEADERS */
+.header{
+  overflow: auto;
+  cursor: pointer;
+}
+  .header:hover {
+    color: #ffffd1;
+  }
+  .header .toggle-open {
+    display: block;
+    float: left;
+    width: 16px;
+    height: 15px;
+    background: url('/img/toggle.png') 0px 0px no-repeat;
+    margin: 7px 6px 0 0;
+  }
+    .header:hover .toggle-open {
+      background: url('/img/toggle.png') -16px 0px no-repeat;
+    }
+  .header .toggle-close {
+    display: block;
+    float: left;
+    width: 16px;
+    height: 15px;
+    background: url('/img/toggle.png') 0px -15px no-repeat;
+    margin: 7px 6px 0 0;
+  }
+    .header:hover .toggle-close {
+      background: url('/img/toggle.png') -16px -15px no-repeat;
+    }
+  .header .title {
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.4);
+    padding-top: 4px;
+    float: left;
+  }
+  .header .score {
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.4);
+    padding-top: 4px;
+    float: right;
   }
