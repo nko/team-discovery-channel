@@ -106,7 +106,7 @@ app.post('/tests/', function(req, res) {
                 // because we hash url to receive id, the url couldn't have changed
                 throw new Error(JSON.stringify(er));
             }
-                        
+
             runTests(id, req.body.url, function() {
                 res.redirect( '/tests/' + id );
             });
@@ -153,10 +153,10 @@ function runTests(test_id, url, callback) {
 
 // GET a test record
 app.get('/tests/:id', function(req, res) {
-    db.getDoc(req.params.id, function(er, test) {        
+    db.getDoc(req.params.id, function(er, test) {
         db.view('cloudq', 'test_results', {limit: 5, startkey: '"' + test.id + '"' }, function(er, testResults) {
             sys.puts("" + JSON.stringify(testResults.rows.length));
-            
+
             res.render('view/tests/show.ejs', {
                 locals: { id: req.params.id, test: test, error: null, test_results: testResults }
             });
@@ -168,7 +168,7 @@ app.get('/tests/:id', function(req, res) {
 // Execute test runner, then redirect to results (stored in DB)
 app.post('/tests/:id/run', function(req, res) {
     db.getDoc(req.params.id, function(er, doc) {
-        runTests(doc.id, doc.url, function(er, testResults) {            
+        runTests(doc.id, doc.url, function(er, testResults) {
             res.redirect('/tests/' + req.params.id + '/results/' + testResults.id);
         });
     });
@@ -186,13 +186,13 @@ app.get('/tests/:test_id/results/:id', function(req, res) {
 });
 
 app.post('/hooks/github/:twitter', function(req, res) {
-        
+
     try {
         var gitPayload = JSON.parse(req.body.payload);
         var url = gitPayload.repository.url;
-        
+
         if (url) {
-            
+
             var scriptRunner = new sandbox.Sandbox({
                 timeout: 10000,
                 url: url
@@ -200,7 +200,7 @@ app.post('/hooks/github/:twitter', function(req, res) {
 
             // http://github.com/nko/team-discovery-channel.
             scriptRunner.run(sandbox, function(output) {
-                                
+
                 var error = '';
 
                var testOutput = [];
@@ -223,7 +223,7 @@ app.post('/hooks/github/:twitter', function(req, res) {
     } catch (e) {
         sys.puts(e);
     }
-        
+
 });
 
 var port = process.env.PORT || 8000;
