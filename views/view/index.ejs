@@ -44,4 +44,25 @@
     </div>
   </div>
   <% } %>
+  
+  <div class="outer-box">
+    <div class="outer-box-inset">
+      <div class="header test-result-toggle">
+        <a class="toggle-open" href="#"></a>
+        <div class="title">Instructions</div>
+      </div>
+
+      <div class="inner-box" style="display:none">
+        <div class="inner-box-inset">
+          <ol class="instructions" style="margin-left: 20px">
+            <li>Give us a URL to your GitHub Repo (including http://)</li>
+            <li>Your repo must have a top-level /test or /tests/ directory containing an index.html QUnit test file</li>
+            <li>You can also give us a URL that points directly to your html file</li>
+            <li>We will scrape any JS includes in that test file, and we'll execute your test</li>
+            <li>We don't support all DOM operations, objects (i.e. XMLHttpRequest)</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
