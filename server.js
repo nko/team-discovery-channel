@@ -97,7 +97,6 @@ app.get('/', function(req, res) {
     db.request('/_design/cloudq/_view/tests', function(er, result) {
         res.render('view/index.ejs', {
             locals: {
-                error: null,
                 tests: result.rows,
                 url: '', // http://github.com/nko/team-discovery-channel
             }
@@ -194,7 +193,7 @@ app.get('/tests/:id', function(req, res) {
         var url = '/_design/cloudq/_view/test_results?startkey=' + encodeURIComponent(startkey) + '&endkey=' + encodeURIComponent(endkey) + '&descending=true&limit=5';
         db.request(url, function(er, testResults) {
             res.render('view/tests/show.ejs', {
-                locals: { id: req.params.id, test: test, error: null, test_results: testResults }
+                locals: { id: req.params.id, test: test, test_results: testResults }
             });
 
         })

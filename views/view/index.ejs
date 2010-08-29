@@ -6,7 +6,7 @@
       <input type="submit" style="display: none" /><!-- allows enter to submit form -->
       <input id="test-url" type="input" name="url" value="<%= url %>" placeholder="http://github.com/username/repo"/>
       <a class="button" href="#" onclick="document.forms[0].submit()"></a>
-      <% if (error) { %>
+      <% if (locals.error) { %>
         <div class="error" id="error"><%= error %></div>
       <% } %>
 
