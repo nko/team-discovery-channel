@@ -86,6 +86,12 @@ db.getDoc('_design/cloudq', function(er, doc) {
     });
 });
 
+/*
+ * JavaScript Pretty Date
+ * Copyright (c) 2008 John Resig (jquery.com)
+ * Licensed under the MIT license.
+ */
+
 app.configure('production', function() {
     // TODO?
 });
@@ -172,6 +178,67 @@ function runTests(test_id, url, callback, twitter, gitPayload) {
     });
 }
 
+/*
+ * Javascript Humane Dates
+ * Copyright (c) 2008 Dean Landolt (deanlandolt.com)
+ * Re-write by Zach Leatherman (zachleat.com)
+ * 
+ * Adopted from the John Resig's pretty.js
+ * at http://ejohn.org/blog/javascript-pretty-date
+ * and henrah's proposed modification 
+ * at http://ejohn.org/blog/javascript-pretty-date/#comment-297458
+ * 
+ * Licensed under the MIT license.
+ */
+// http://www.zachleat.com/Lib/jquery/humane.js
+function prettyDate(date_str){
+    var time_formats = [
+        [60, 'Just Now'],
+        [90, '1 Minute'], // 60*1.5
+        [3600, 'Minutes', 60], // 60*60, 60
+        [5400, '1 Hour'], // 60*60*1.5
+        [86400, 'Hours', 3600], // 60*60*24, 60*60
+        [129600, '1 Day'], // 60*60*24*1.5
+        [604800, 'Days', 86400], // 60*60*24*7, 60*60*24
+        [907200, '1 Week'], // 60*60*24*7*1.5
+        [2628000, 'Weeks', 604800], // 60*60*24*(365/12), 60*60*24*7
+        [3942000, '1 Month'], // 60*60*24*(365/12)*1.5
+        [31536000, 'Months', 2628000], // 60*60*24*365, 60*60*24*(365/12)
+        [47304000, '1 Year'], // 60*60*24*365*1.5
+        [3153600000, 'Years', 31536000], // 60*60*24*365*100, 60*60*24*365
+        [4730400000, '1 Century'], // 60*60*24*365*100*1.5
+    ];
+
+    var time = ('' + date_str).replace(/-/g,"/").replace(/[TZ]/g," "),
+        dt = new Date,
+        seconds = ((dt - new Date(time) + (dt.getTimezoneOffset() * 60000)) / 1000),
+        token = ' Ago',
+        i = 0,
+        format;
+
+    if (seconds < 0) {
+        seconds = Math.abs(seconds);
+        token = '';
+    }
+
+    while (format = time_formats[i++]) {
+        if (seconds < format[0]) {
+            if (format.length == 2) {
+                return format[1] + (i > 1 ? token : ''); // Conditional so we don't return Just Now Ago
+            } else {
+                return Math.round(seconds / format[2]) + ' ' + format[1] + (i > 1 ? token : '');
+            }
+        }
+    }
+
+    // overflow for centuries
+    if(seconds > 4730400000)
+        return Math.round(seconds / 4730400000) + ' Centuries' + token;
+
+    return date_str;
+};
+
+
 function ISODateString(d){
  function pad(n){return n<10 ? '0'+n : n}
  return d.getUTCFullYear()+'-'
@@ -192,8 +259,16 @@ app.get('/tests/:id', function(req, res) {
         var endkey = '["' + req.params.id + '","' + ISODateString(new Date(0)) + '"]';
         var url = '/_design/cloudq/_view/test_results?startkey=' + encodeURIComponent(startkey) + '&endkey=' + encodeURIComponent(endkey) + '&descending=true&limit=5';
         db.request(url, function(er, testResults) {
+            // Calculate pretty date for each result set; would prefer if this was
+            // a filter of some kind. But at this point in the contest, I don't care.
+            var result;
+            for (var i = 0; i < testResults.rows.length; i++) {
+                result = testResults.rows[i].value;
+                result.pretty_date = prettyDate(result.date);
+            }
             res.render('view/tests/show.ejs', {
-                locals: { id: req.params.id, test: test, test_results: testResults }
+                locals: { id: req.params.id, test: test, test_results: testResults },
+                filters: { pretty: prettyDate }
             });
 
         })
