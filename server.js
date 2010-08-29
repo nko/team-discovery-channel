@@ -50,13 +50,12 @@ app.configure('development', function() {
 
 var db = couchdb
     .createClient(5984, 'shodan.couchone.com', process.env.COUCH_USER, process.env.COUCH_PASSWORD)
-    .db('cloudq');
+    .db(process.env.COUCH_DB);
 
-// Create the design document. If it already exists, it won't
-// get written. You'll need to go to the database admin area
-// and edit it yourself for now (sigh).
-db.saveDesign('cloudq', {
-    views: {
+// Save the design document to the Couch server. If the
+// document already exists, it will update it.
+db.getDoc('_design/cloudq', function(er, doc) {
+    var params = { views: {
         // View function returns *strictly* tests
         "tests": {
             map: function(doc) {
@@ -73,13 +72,20 @@ db.saveDesign('cloudq', {
                 }
             }
         }
-    }}, function(er, doc) {
-        if (er && er.error != 'conflict') {
-            // Conflicts are OK, for now (see above)
+    }};
+
+    if (doc) {
+        // Need to pass rev to avoid doc conflicts
+        params._rev = doc._rev;
+    }
+
+    db.saveDoc('_design/cloudq', params, function(er, doc) {
+        if (er) {
             throw new Error(JSON.stringify(er));
         }
-    }
-);
+        sys.log("CouchDB design document updated");
+    });
+});
 
 app.configure('production', function() {
     // TODO?
