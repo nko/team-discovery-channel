@@ -235,6 +235,8 @@ app.post('/run-tests-twitter', function(req, res) {
                 });
             });
         }
+    } catch (e) {
+        
     }
         
 });
