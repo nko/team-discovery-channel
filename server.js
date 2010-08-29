@@ -125,12 +125,12 @@ app.post('/tests/', function(req, res) {
             testStates[id].status = "running";
             runTests(id, req.body.url, function( data ) {
                 try {
-                    var body = fs.readFileSync("views/_test-result.ejs");
+                    var body = ''+fs.readFileSync("views/_test-result.ejs");
                     var content = ejs.render(body, {
                         locals: {
                             results: data
                         }
-                    })
+                    });
                     testStates[id].content = content;
                     testStates[id].status = "complete";
                 } catch (e) {
