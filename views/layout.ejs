@@ -24,7 +24,10 @@
     <script>
       $(function() {
         $('.test-result-toggle').click(function() {
-          $(this).siblings('.inner-box').toggle();
+
+          var innerBox = $(this).siblings('.inner-box').toggle();
+          var toggleLink = $(this).find('a').toggleClass('toggle-close').toggleClass('toggle-open');
+        
           return false;
         });
 

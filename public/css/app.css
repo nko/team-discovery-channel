@@ -142,10 +142,10 @@ input {
     cursor: default;
   }
   .score.passed {
-      color:green;
+      color:white;
   }
   .score.failed {
-      color:red;
+      color:white;
   }
   .tests li.passed {
     background: #f3ffd2;
