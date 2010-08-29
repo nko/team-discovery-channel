@@ -69,7 +69,8 @@
         if (id > '') {
             var redirect = false;
             (function checkData() {
-                
+              
+              var wasRunning = false;
         		$.ajax({
         			url: '/tests/running/' + id ,
         			data: {},
@@ -79,9 +80,10 @@
                             redirect = true;
                             $('#test-results-loading').show();
                             setTimeout(checkData, 1000);
+                            wasRunning = true;
                         } else {
                             $('#test-results-loading').hide();
-                            if (data.content) {
+                            if (data.content && wasRunning) {
                                 var element = $(data.content);
                                 $('#webhook').after(element);
                             }
