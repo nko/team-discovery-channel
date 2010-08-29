@@ -21,7 +21,7 @@ a:active, a:focus { outline: none; } /* Disables the dotted outline FireFox puts
 .container {
 	width: 450px;
 	margin: 0 auto;
-	padding-top: 40px;
+	padding-top: 30px;
 	padding-bottom: 20px;
 }
 
@@ -50,6 +50,7 @@ body {
   -webkit-box-shadow: 1px 1px 0px rgba(255, 255, 255, 0.45);
   -moz-box-shadow: 1px 1px 0px rgba(255, 255, 255, 0.45);
   box-shadow: 1px 1px 0px rgba(255, 255, 255, 0.45);
+  behavior: url("ie/PIE.htc");
   }
   .outer-box-inset {
     padding: 14px 18px 18px 18px;
@@ -89,6 +90,7 @@ body {
   -webkit-box-shadow: 1px 1px 0px rgba(255, 255, 255, 0.45);
   -moz-box-shadow: 1px 1px 0px rgba(255, 255, 255, 0.45);
   box-shadow: 1px 1px 0px rgba(255, 255, 255, 0.45);
+  behavior: url("ie/PIE.htc");
 
   color: #474747;
   margin-top: 4px;
@@ -259,3 +261,60 @@ a, a:visited, a:active {
     padding-top: 4px;
     float: right;
   }
+
+
+
+
+
+/* TITLEBAR */
+.titlebar {
+  background: #75b7de;
+  border-top: solid 1px #6099ba;
+  border-bottom: solid 1px #6099ba;
+  margin-bottom: -30px;
+  -webkit-box-shadow:
+      0px 1px 0px #c4e4f6,
+      inset 0px 2px 2px #66a8cf;
+  -moz-box-shadow:
+      0px 1px 0px #c4e4f6,
+      inset 0px 2px 2px #66a8cf;
+  box-shadow:
+      0px 1px 0px #c4e4f6,
+      inset 0px 2px 2px #66a8cf;
+  behavior: url("ie/PIE.htc");
+}
+  .titlebar .container {
+    padding: 18px 0;
+  }
+  .titlebar p {
+    margin: 9px 0;
+    text-shadow: 0px -1px rgba(0, 0, 0, 0.2);
+  }
+  .titlebar a {
+    color: #fffeb8;
+    text-shadow: 0px -1px rgba(0, 0, 0, 0.2);
+  }
+
+  .titlebar .cronos {
+    float: left;
+    font-size: 30px;
+    line-height: 36px;
+    margin-right: 10px;
+  }
+
+  .titlebar .button2 {
+    display: inline-block;
+    height: 32px;
+    width: 80px;
+    background: url("/img/button2.png") no-repeat;
+    margin-top: 3px;
+  }
+    .titlebar .button2:hover {
+      background: url("/img/button2.png") 0px -32px no-repeat;
+    }
+    .titlebar .button2:active {
+      background: url("/img/button2.png") 0px -64px no-repeat;
+    }
+
+
+
