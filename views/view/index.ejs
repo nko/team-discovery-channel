@@ -1,45 +1,47 @@
-<div class="outer-box">
-  <div class="outer-box-inset">
-    <form action="/tests/" method="POST">
+<div class="container">
+  <div class="outer-box">
+    <div class="outer-box-inset">
+      <form action="/tests/" method="POST">
 
-      <label for="test-url">GitHub URL</label>
-      <input type="submit" style="display: none" /><!-- allows enter to submit form -->
-      <input id="test-url" type="input" name="url" value="<%= url %>" placeholder="http://github.com/username/repo"/>
-      <a class="button" href="#" onclick="document.forms[0].submit()"></a>
-      <% if (locals.error) { %>
-        <div class="error" id="error"><%= error %></div>
-      <% } %>
+        <label for="test-url">GitHub URL</label>
+        <input type="submit" style="display: none" /><!-- allows enter to submit form -->
+        <input id="test-url" type="input" name="url" value="<%= url %>" placeholder="http://github.com/username/repo"/>
+        <a class="button" href="#" onclick="document.forms[0].submit()"></a>
+        <% if (locals.error) { %>
+          <div class="error" id="error"><%= error %></div>
+        <% } %>
 
-      <div class="inner-box">
+        <div class="inner-box">
+          <div class="inner-box-inset">
+            <p>
+              CloudQ takes your project's QUnit tests and runs them in a sandboxed DOM environment on our servers. Then we notify you with the result. It's a breeze!
+            </p>
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <% if (locals.test_results && test_results.length) { %>
+  <div class="outer-box">
+    <div class="outer-box-inset">
+      <div class="header test-result-toggle">
+        <a class="toggle-open" href="#"></a>
+        <div class="title">Recent Tests</div>
+      </div>
+
+      <div class="inner-box" style="display:none">
         <div class="inner-box-inset">
+          <%
+          for (var i = 0, result; i < test_results.length; i++) {
+            result = test_results[i];
+          %>
           <p>
-            CloudQ takes your project's QUnit tests and runs them in a sandboxed DOM environment on our servers. Then we notify you with the result. It's a breeze!
+            <a href="/tests/<%= result.value.test_id %>"><%= result.value.url %></a> (<%= result.value.passed %>/<%= result.value.total %>)
           </p>
+          <% } %>
         </div>
       </div>
-  </div>
-</div>
-
-<% if (locals.test_results && test_results.length) { %>
-<div class="outer-box">
-  <div class="outer-box-inset">
-    <div class="header test-result-toggle">
-      <a class="toggle-open" href="#"></a>
-      <div class="title">Recent Tests</div>
-    </div>
-
-    <div class="inner-box" style="display:none">
-      <div class="inner-box-inset">
-        <%
-        for (var i = 0, result; i < test_results.length; i++) {
-          result = test_results[i];
-        %>
-        <p>
-          <a href="/tests/<%= result.value.test_id %>"><%= result.value.url %></a> (<%= result.value.passed %>/<%= result.value.total %>)
-        </p>
-        <% } %>
-      </div>
     </div>
   </div>
+  <% } %>
 </div>
-<% } %>

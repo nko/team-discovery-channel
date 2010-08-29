@@ -1,74 +1,69 @@
-<div class="outer-box">
-  <div class="outer-box-inset">
-    <div class="header">
-      <div class="title"><%= test.url %></div>
-    </div>
-    <div class="inner-box">
-      <div class="inner-box-inset">
-        <p>
-          Results are below. To set up a post-commit hook for your GitHub repo, <a id="web-hook-toggle" href="#">click here</a>. We'll notify you if your build breaks!
-        </p>
-        
-        <div style="clear:both"></div>
-      </div>
-    </div>
+<div class="titlebar">
+  <div class="container">
+    <div class="cronos"><%= test.url %></div><a class="button2" href="#"></a>
+    <p>
+      Our hyper intelligent and self-aware cloud servers have analyzed and run your unit tests. Results are below!
+    </p>
+    <a href="#" id="web-hook-toggle">Set up a post-commit hook for your GitHub repo</a>
   </div>
 </div>
 
-<div class="outer-box" id="webhook" style="display:none">
-  <div class="outer-box-inset">
-        <label for="test-url">Twitter Username</label>
-        <input id="twitter-handle" type="input" name="twitter-handle" />
-        <a class="button" href="#" id="create-github-link"></a>
+<div class="container">
+  <div class="outer-box" id="webhook" style="display:none">
+    <div class="outer-box-inset">
+          <label for="test-url">Twitter Username</label>
+          <input id="twitter-handle" type="input" name="twitter-handle" />
+          <a class="button" href="#" id="create-github-link"></a>
       
-      <div id="hook-reveal" style="display:none">
-        <label style="margin-top: 5px" for="hook">GitHub Hook</label>
-        <input id="hook" type="input" name="hook" value=""/>
-      </div>
-  </div>
-</div>
-
-<% for (var h = 0; h < test_results.rows.length; h++) { %>
-<% results = test_results.rows[h].value %>
-
-<%
-    // First comment block should be "open"
-    var initialState = "toggle-open";
-    var initialDisplay = "none";
-    if (h == 0) {
-        initialState = "toggle-close";
-        initialDisplay = "block";
-    }
-%>
-
-<div class="outer-box <% if (results.passed == results.total) {%>green<%}else{%>red<%}%>">
-  <div class="outer-box-inset">
-    <div class="header test-result-toggle">
-      <a class="<%= initialState %>" href="#"></a>
-      <div class="title">c3dd5f... <%= results.date %></div>
-      <div class="score"><%= results.passed %> / <%= results.total %></div>
+        <div id="hook-reveal" style="display:none">
+          <label style="margin-top: 5px" for="hook">GitHub Hook</label>
+          <input id="hook" type="input" name="hook" value=""/>
+        </div>
     </div>
+  </div>
+
+  <% for (var h = 0; h < test_results.rows.length; h++) { %>
+  <% results = test_results.rows[h].value %>
+
+  <%
+      // First comment block should be "open"
+      var initialState = "toggle-open";
+      var initialDisplay = "none";
+      if (h == 0) {
+          initialState = "toggle-close";
+          initialDisplay = "block";
+      }
+  %>
+
+  <div class="outer-box <% if (results.passed == results.total) {%>green<%}else{%>red<%}%>">
+    <div class="outer-box-inset">
+      <div class="header test-result-toggle">
+        <a class="<%= initialState %>" href="#"></a>
+        <div class="title">c3dd5f... <%= results.date %></div>
+        <div class="score"><%= results.passed %> / <%= results.total %></div>
+      </div>
     
-    <div class="inner-box" style="display:<%= initialDisplay %>">
-      <div class="inner-box-inset">
-        <ul class="tests">
-        <% for (var i = 0, test; (test = results.output[i]) != null; i++) { %>
+      <div class="inner-box" style="display:<%= initialDisplay %>">
+        <div class="inner-box-inset">
+          <ul class="tests">
+          <% for (var i = 0, test; (test = results.output[i]) != null; i++) { %>
 
-            <li class="header"><%= test.name %></li>
+              <li class="header"><%= test.name %></li>
 
-            <% for (var j = 0, assertion; (assertion = test.tests[j]) != null; j++) { %>
+              <% for (var j = 0, assertion; (assertion = test.tests[j]) != null; j++) { %>
 
-                <% if (assertion.result) { %>
-                    <li class="passed"><%= j + 1 %>. <%= assertion.message %></li>
-                <% } else { %>
-                    <li class="failed"><%= j + 1 %>. <%= assertion.message %></li>
-                <% } %>
+                  <% if (assertion.result) { %>
+                      <li class="passed"><%= j + 1 %>. <%= assertion.message %></li>
+                  <% } else { %>
+                      <li class="failed"><%= j + 1 %>. <%= assertion.message %></li>
+                  <% } %>
 
-            <% } %>
-        <% } %>
-        </ul>
+              <% } %>
+          <% } %>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
+  <% } %>
 </div>
-<% } %>

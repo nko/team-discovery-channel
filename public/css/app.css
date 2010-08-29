@@ -40,7 +40,7 @@ body {
 /* OUTER BOX */
 .outer-box {
   background: #8ac6e9;
-  margin: 27px 0;
+  margin: 0 0 27px 0;
   overflow: hidden;
   border: solid 1px #548fb2;
   -moz-border-radius: 5px;
@@ -270,7 +270,6 @@ a, a:visited, a:active {
 .titlebar {
   background: #75b7de url('/img/border.png') left bottom repeat-x;
   border-top: solid 1px #6099ba;
-  margin-bottom: -30px;
   -webkit-box-shadow: inset 0px 2px 2px #66a8cf;
   -moz-box-shadow: inset 0px 2px 2px #66a8cf;
   box-shadow: inset 0px 2px 2px #66a8cf;
