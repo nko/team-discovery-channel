@@ -1,3 +1,11 @@
+<script type="text/javascript">
+<% if (test.url) { %>
+var url = "<%= test.url %>";
+<% } else { %>
+var url = false;
+<% } %>
+</script>
+
 <div class="outer-box">
   <div class="outer-box-inset">
     <div class="inner-box">
@@ -7,7 +15,7 @@
         </p>
         
         <p>
-          To set up a post-commit hook for your GitHub repo, <a href="#">click here</a>. We'll even notify you when your build breaks!
+          To set up a post-commit hook for your GitHub repo, <a id="web-hook-toggle" href="#">click here</a>. We'll even notify you when your build breaks!
         </p>
         
         <div style="clear:both"></div>
@@ -20,10 +28,10 @@
   <div class="outer-box-inset">
       <label for="test-url">Twitter Handle</label>
       <input id="twitter-handle" type="input" name="twitter-handle" />
-      <label style="margin-top: 5px"  for="twitter">GitHub Hook</label>
-      <input id="twitter" type="input" name="twitter" value=""/>
+      <label style="margin-top: 5px"  for="hook">GitHub Hook</label>
+      <input id="hook" type="input" name="hook" value=""/>
       <p>
-        To set up a post-commit hook for your GitHub repo, <a href="#">click here</a>. We'll even notify you when your build breaks!
+        To set up a post-commit hook for your GitHub repo, <a id="create-github-link" href="#">click here</a>. We'll even notify you when your build breaks!
       </p>
       
       <div style="clear:both"></div>

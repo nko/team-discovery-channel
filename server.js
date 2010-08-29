@@ -152,8 +152,9 @@ function runTests(test_id, url, callback) {
 
 // GET a test record
 app.get('/tests/:id', function(req, res) {
-    db.getDoc(req.params.id, function(er, test) {
+    db.getDoc(req.params.id, function(er, test) {        
         db.view('cloudq', 'test_results', {limit: 5, startkey: '"' + test.id + '"' }, function(er, testResults) {
+            
             res.render('view/tests/show.ejs', {
                 locals: { id: req.params.id, test: test, error: null, test_results: testResults }
             });
@@ -182,7 +183,7 @@ app.get('/tests/:test_id/results/:id', function(req, res) {
     });
 });
 
-app.post('/hooks/github', function(req, res) {
+app.post('/hooks/github/:twitter', function(req, res) {
     
     try {
         var gitPayload = JSON.parse(req.body.payload);
