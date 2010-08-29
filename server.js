@@ -50,7 +50,7 @@ app.configure('development', function() {
 
 var db = couchdb
     .createClient(5984, 'shodan.couchone.com', process.env.COUCH_USER, process.env.COUCH_PASSWORD)
-    .db('cloudq');
+    .db(process.env.COUCH_DB);
 
 // Create the design document. If it already exists, it won't
 // get written. You'll need to go to the database admin area
